@@ -8,9 +8,9 @@ The end result is hopefully a custom made PCB to bring everything together.
 
 ## Hardware
 A old display from a city bus is used for this project. The stickers on it date back to 1995 and identifies the manufacturer as "Lawo-Luminator-Europa Mark IV Industires GmbH".
-Based on its size with only 13x8 dots, it was probably used to show the route number on the side or rear end of the bus.
+Based on its size with only 28x13 dots, it was probably used to show the route number on the side or rear end of the bus.
 
-Other displays with more dots and different interfaces are also available from various manufactures. They will maybe used and documented later, but for the moment the project sticks to the mentioned Lawo 13x8 display.
+Other displays with more dots and different interfaces are also available from various manufactures. They will maybe used and documented later, but for the moment the project sticks to the mentioned Lawo 28x13 display.
 
 ## Motivation
 A lot of people upload informations about their flipdot display to video or discussion platforms. But these informations are often incomplete or focus only on one part of the build. Videos of running displays are nice to watch but dont provide informations about how to rebuild the same thing. Users which ask for more informations in the comments, dont get a reply. On the otherside, some users provide schematics and others only code.
