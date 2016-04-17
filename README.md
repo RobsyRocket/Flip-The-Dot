@@ -10,6 +10,9 @@ The end result is hopefully a custom made PCB to bring everything together.
 A old display from a city bus is used for this project. The stickers on it date back to 1995 and identifies the manufacturer as "Lawo-Luminator-Europa Mark IV Industires GmbH".
 Based on its size with only 28x13 dots, it was probably used to show the route number on the side or rear end of the bus.
 
+![picture](Documentation/Hardware/Display%20%E2%80%93%20Lawo%2028x13/01%20-%20Lawo%2028x13%20-%2050%20Pin%20-%20Front.jpg "Front view of the Lawo 28x13")
+_Front view of the Lawo 28x13_
+
 Other displays with more dots and different interfaces are also available from various manufactures. They will maybe used and documented later, but for the moment the project sticks to the mentioned Lawo 28x13 display.
 
 ## Motivation
