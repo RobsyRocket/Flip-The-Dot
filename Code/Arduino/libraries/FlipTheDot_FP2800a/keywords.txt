@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+FlipTheDot_FP2800a	     KEYWORD1	FP2800a
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+pulse           KEYWORD2
+setOutput       KEYWORD2
+getOutput       KEYWORD2
+setData         KEYWORD2
+setPulseLength  KEYWORD2
+getPulseLength  KEYWORD2
+enable          KEYWORD2
+disable         KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
