@@ -247,7 +247,7 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
 
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
         FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a output ");
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print(no);
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print(_selectedOutput);
         FlipTheDot_FP2800a_DEBUG_SERIAL.println(" selected");
         #endif
 
