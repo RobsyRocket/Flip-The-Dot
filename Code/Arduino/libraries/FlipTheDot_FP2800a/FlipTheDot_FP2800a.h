@@ -9,10 +9,6 @@
 #ifndef FlipTheDot_FP2800a_h
 #define FlipTheDot_FP2800a_h
 
-#ifndef FlipTheDot_FP2800a_DEBUG
-#define FlipTheDot_FP2800a_DEBUG 0
-#endif
-
 #include "Arduino.h"
 
 
@@ -170,7 +166,7 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
         #endif
         return true;
     }
-    else if ( no < 1 && no > 28 )
+    else if ( no < 1 || no > 28 )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
         FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a selected output ");
