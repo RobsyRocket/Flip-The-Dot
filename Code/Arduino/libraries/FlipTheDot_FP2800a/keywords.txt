@@ -21,6 +21,7 @@ setPulseLength  KEYWORD2
 getPulseLength  KEYWORD2
 enable          KEYWORD2
 disable         KEYWORD2
+isEnabled       KEYWORD2
 
 
 #######################################
