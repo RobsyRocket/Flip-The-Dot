@@ -27,6 +27,7 @@ class FlipTheDot_FP2800a
         virtual unsigned int getPulseLength();
         virtual void enable();
         virtual void disable();
+        virtual bool isEnabled();
     
     protected:
         void initPins();
@@ -44,6 +45,8 @@ class FlipTheDot_FP2800a
         unsigned int _pinB1;
 
         unsigned int _selectedOutput;
+
+        bool _isEnabled = false;
 };
 
 
@@ -158,6 +161,14 @@ unsigned int FlipTheDot_FP2800a::getPulseLength()
  */
 bool FlipTheDot_FP2800a::setOutput(unsigned int no)
 {
+    if ( isEnabled() == true )
+    {
+        #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a output cannot be selected when IC is already enabled");
+        #endif
+        return false;
+    }
+    
     if ( _selectedOutput == no )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
@@ -270,6 +281,7 @@ void FlipTheDot_FP2800a::enable()
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
     FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a enabling");
     #endif
+    _isEnabled = true;
     digitalWrite(_pinEnable, HIGH);
 }
 
@@ -280,9 +292,22 @@ void FlipTheDot_FP2800a::enable()
 void FlipTheDot_FP2800a::disable()
 {
     digitalWrite(_pinEnable, LOW);
+    _isEnabled = false;
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
     FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a disabled");
     #endif
+}
+
+
+/**
+ * get information if the enable pin is currently HIGH
+ */
+bool FlipTheDot_FP2800a::isEnabled()
+{
+    #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
+    FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a get enable state");
+    #endif
+    return _isEnabled;
 }
 
 
