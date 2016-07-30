@@ -22,7 +22,7 @@ class FlipTheDot_FP2800a
         virtual void pulse();
         virtual bool setOutput(unsigned int no);
         virtual unsigned int getOutput();
-        virtual void setData(bool is_high);
+        virtual bool setData(bool is_high);
         virtual void setPulseLength(unsigned int _pulseLengthMicros);
         virtual unsigned int getPulseLength();
         virtual void enable();
@@ -131,10 +131,26 @@ void FlipTheDot_FP2800a::initPins()
 
 /**
  * define if the output should source or sink current
+ * can only be changed when enabled is low
  */
-void FlipTheDot_FP2800a::setData(bool is_high)
+bool FlipTheDot_FP2800a::setData(bool is_high)
 {
+    if ( isEnabled() == true )
+    {
+        #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a data cannot be changed when IC is already enabled");
+        #endif
+        return false;
+    }
+
+
+    #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
+    Serial.println("FlipTheDot_FP2800a data updated");
+    #endif
+
     digitalWrite(_pinData, is_high == true ? HIGH : LOW);
+    
+    return true;
 }
 
 
@@ -158,6 +174,7 @@ unsigned int FlipTheDot_FP2800a::getPulseLength()
 
 /**
  * switch pins (A0, A1, A2, B0, B1) to HIGH/LOW to define which pin should be enabled during F2800::pulse
+ * can only be changed when enabled is low
  */
 bool FlipTheDot_FP2800a::setOutput(unsigned int no)
 {
