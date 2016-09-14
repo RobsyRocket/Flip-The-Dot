@@ -135,10 +135,10 @@ void FlipTheDot_FP2800a::initPins()
     pinMode(_pinB0, OUTPUT);
     digitalWrite(_pinB0, LOW);
     pinMode(_pinB1, OUTPUT);
-    digitalWrite(_pinEnable, LOW);
+    digitalWrite(_pinB1, LOW);
 
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a pins initialized");
+    //FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a pins initialized");
     #endif
 }
 
@@ -159,7 +159,9 @@ bool FlipTheDot_FP2800a::setData(bool is_high)
 
 
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    Serial.println("FlipTheDot_FP2800a data updated");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a data updated (");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.print(is_high ? "HIGH" : "LOW");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.println(")");
     #endif
 
     digitalWrite(_pinData, is_high == true ? HIGH : LOW);
