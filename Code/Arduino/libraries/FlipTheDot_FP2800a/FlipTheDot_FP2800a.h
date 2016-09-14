@@ -22,6 +22,7 @@ class FlipTheDot_FP2800a
         virtual void pulse();
         virtual bool setOutput(unsigned int no);
         virtual unsigned int getOutput();
+        virtual unsigned int getOutputMax();
         virtual bool setData(bool is_high);
         virtual void setPulseLength(unsigned int pulseLengthMicros);
         virtual unsigned int getPulseLength();
@@ -48,6 +49,8 @@ class FlipTheDot_FP2800a
         unsigned int _selectedOutput;
 
         bool _isEnabled = false;
+
+        const unsigned int _maxOutputsOnChip = 28;
 };
 
 
@@ -210,12 +213,13 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
         #endif
         return true;
     }
-    else if ( no < 1 || no > 28 )
+    else if ( no < 1 || no > _maxOutputsOnChip )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
         FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a selected output ");
         FlipTheDot_FP2800a_DEBUG_SERIAL.print(no);
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println(" is out of range 1 to 28");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print(" is out of range 1 to ");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println(_maxOutputsOnChip);
         #endif
         return false;
     }
@@ -302,6 +306,15 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
 unsigned int FlipTheDot_FP2800a::getOutput()
 {
     return _selectedOutput;
+}
+
+
+/**
+ * get maximum output number
+ */
+unsigned int FlipTheDot_FP2800a::getOutputMax()
+{
+    return _maxOutputsOnChip;
 }
 
 
