@@ -34,8 +34,8 @@
 
 
 // defining the Arduino pins which control the FP2800a
-const int fp2800a_pin_DATA      = A0;
-const int fp2800a_pin_ENABLE    = A1;
+const int fp2800a_pin_ENABLE    = A0;
+const int fp2800a_pin_DATA      = A1;
 
 const int fp2800a_pin_A0        = 2; // D2
 const int fp2800a_pin_A1        = 3; // D3
@@ -48,8 +48,8 @@ const int fp2800a_pulse_length  = 100; // microseconds
 
 // setup the FP2800a controller object
 FlipTheDot_FP2800a controller(
-                            fp2800a_pin_DATA,
                             fp2800a_pin_ENABLE,
+                            fp2800a_pin_DATA,
                             fp2800a_pin_A0,
                             fp2800a_pin_A1,
                             fp2800a_pin_B0,
@@ -77,7 +77,7 @@ void setup() {
 
 
 void loop() {
-  if ( outputNo < 0 || outputNo >= 28 )
+  if ( outputNo < 0 || outputNo >= controller.getOutputMax() )
   {
     // reset output number and invert the data flag
     outputNo = 0;
