@@ -32,6 +32,7 @@ class FlipTheDot_FP2800a
     protected:
         void initPins();
 
+        virtual bool _hasDuplicatePins();
         unsigned int _pulseLengthMicros;
 
         unsigned int _pinData;
@@ -53,23 +54,6 @@ class FlipTheDot_FP2800a
 
 FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros = 100)
 {
-    // check for duplicates
-    if ( 
-        pinData == pinEnable || pinData == pinA0 || pinData == pinA1 || pinData == pinA2 || pinData == pinB0 || pinData == pinB1 ||
-        pinEnable == pinA0 || pinEnable == pinA1 || pinEnable == pinA2 || pinEnable == pinB0 || pinEnable == pinB1 ||
-        pinA0 == pinA1 || pinA0 == pinA2 || pinA0 == pinB0 || pinA0 == pinB1 ||
-        pinA1 == pinA2 || pinA1 == pinB0 || pinA1 == pinB1 || 
-        pinA2 == pinB0 || pinA2 == pinB1 || 
-        pinB0 == pinB1
-    )
-    {
-      // some of the pins are equal => not allowed
-      #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-      FlipTheDot_FP2800a_DEBUG_SERIAL.println("Pin configuration for FlipTheDot_FP2800a is not valid: duplicate pin detected");
-      #endif
-      while(1);
-    }
-
     _pulseLengthMicros = pulseLengthMicros;
 
     _pinData = pinData;
@@ -81,6 +65,16 @@ FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEna
 
     _pinB0 = pinB0;
     _pinB1 = pinB1;
+
+    // check for duplicates
+    if ( _hasDuplicatePins() )
+    {
+      // some of the pins are equal => not allowed
+      #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
+      //FlipTheDot_FP2800a_DEBUG_SERIAL.println("Pin configuration for FlipTheDot_FP2800a is not valid: duplicate pin detected");
+      #endif
+      while(1);
+    }
 
     _selectedOutput = 0;
 
@@ -100,6 +94,26 @@ FlipTheDot_FP2800a::~FlipTheDot_FP2800a()
 
     digitalWrite(_pinB0, LOW);
     digitalWrite(_pinEnable, LOW);
+}
+
+
+/**
+ * check if one or more pins are identical and referencing the same hardware IO
+ */
+bool FlipTheDot_FP2800a::_hasDuplicatePins()
+{
+    if (
+        _pinData == _pinEnable || _pinData == _pinA0 || _pinData == _pinA1 || _pinData == _pinA2 || _pinData == _pinB0 || _pinData == _pinB1 ||
+        _pinEnable == _pinA0 || _pinEnable == _pinA1 || _pinEnable == _pinA2 || _pinEnable == _pinB0 || _pinEnable == _pinB1 ||
+        _pinA0 == _pinA1 || _pinA0 == _pinA2 || _pinA0 == _pinB0 || _pinA0 == _pinB1 ||
+        _pinA1 == _pinA2 || _pinA1 == _pinB0 || _pinA1 == _pinB1 ||
+        _pinA2 == _pinB0 || _pinA2 == _pinB1 ||
+        _pinB0 == _pinB1
+    )
+    {
+      return true;
+    }
+    return false;
 }
 
 
