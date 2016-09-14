@@ -31,7 +31,7 @@ class FlipTheDot_FP2800a
         virtual bool isEnabled();
     
     protected:
-        void initPins();
+        virtual void _initPins();
 
         virtual bool _hasDuplicatePins();
         unsigned int _pulseLengthMicros;
@@ -80,7 +80,7 @@ FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinEnable, unsigned int pinD
 
     _selectedOutput = 0;
 
-    initPins();
+    _initPins();
 }
 
 
@@ -119,7 +119,7 @@ bool FlipTheDot_FP2800a::_hasDuplicatePins()
 }
 
 
-void FlipTheDot_FP2800a::initPins()
+void FlipTheDot_FP2800a::_initPins()
 {
     pinMode(_pinData, OUTPUT);
     digitalWrite(_pinData, LOW);
