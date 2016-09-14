@@ -17,7 +17,7 @@ class FlipTheDot_FP2800a
 {
     public:
         FlipTheDot_FP2800a(){};
-        FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros);
+        FlipTheDot_FP2800a(unsigned int pinEnable, unsigned int pinData, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros);
         ~FlipTheDot_FP2800a();
         virtual void pulse();
         virtual bool setOutput(unsigned int no);
@@ -54,8 +54,7 @@ class FlipTheDot_FP2800a
 };
 
 
-
-FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros = 100)
+FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinEnable, unsigned int pinData, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros = 100)
 {
     _pulseLengthMicros = pulseLengthMicros;
 
