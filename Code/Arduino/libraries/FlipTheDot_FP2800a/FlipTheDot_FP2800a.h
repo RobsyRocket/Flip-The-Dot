@@ -17,13 +17,13 @@ class FlipTheDot_FP2800a
 {
     public:
         FlipTheDot_FP2800a(){};
-        FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int _pulseLengthMicros);
+        FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros);
         ~FlipTheDot_FP2800a();
         virtual void pulse();
         virtual bool setOutput(unsigned int no);
         virtual unsigned int getOutput();
         virtual bool setData(bool is_high);
-        virtual void setPulseLength(unsigned int _pulseLengthMicros);
+        virtual void setPulseLength(unsigned int pulseLengthMicros);
         virtual unsigned int getPulseLength();
         virtual void enable();
         virtual void disable();
@@ -32,7 +32,7 @@ class FlipTheDot_FP2800a
     protected:
         void initPins();
 
-        unsigned int __pulseLengthMicros;
+        unsigned int _pulseLengthMicros;
 
         unsigned int _pinData;
         unsigned int _pinEnable;
@@ -51,7 +51,7 @@ class FlipTheDot_FP2800a
 
 
 
-FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int _pulseLengthMicros = 100)
+FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEnable, unsigned int pinA0, unsigned int pinA1, unsigned int pinA2, unsigned int pinB0, unsigned int pinB1, unsigned int pulseLengthMicros = 100)
 {
     // check for duplicates
     if ( 
@@ -70,7 +70,7 @@ FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinData, unsigned int pinEna
       while(1);
     }
 
-    __pulseLengthMicros = _pulseLengthMicros;
+    _pulseLengthMicros = pulseLengthMicros;
 
     _pinData = pinData;
     _pinEnable = pinEnable;
@@ -157,9 +157,9 @@ bool FlipTheDot_FP2800a::setData(bool is_high)
 /**
  * define how long the pulse method should enable the controller
  */
-void FlipTheDot_FP2800a::setPulseLength(unsigned int _pulseLengthMicros)
+void FlipTheDot_FP2800a::setPulseLength(unsigned int pulseLengthMicros)
 {
-    __pulseLengthMicros = _pulseLengthMicros;
+    _pulseLengthMicros = pulseLengthMicros;
 }
 
 
@@ -168,7 +168,7 @@ void FlipTheDot_FP2800a::setPulseLength(unsigned int _pulseLengthMicros)
  */
 unsigned int FlipTheDot_FP2800a::getPulseLength()
 {
-    return __pulseLengthMicros;
+    return _pulseLengthMicros;
 }
 
 
@@ -333,16 +333,16 @@ bool FlipTheDot_FP2800a::isEnabled()
  */
 void FlipTheDot_FP2800a::pulse()
 {
-    if ( __pulseLengthMicros > 0 )
+    if ( _pulseLengthMicros > 0 )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
         FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a start pulse with length ");
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print(__pulseLengthMicros);
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print(_pulseLengthMicros);
         FlipTheDot_FP2800a_DEBUG_SERIAL.println(" microseconds");
         #endif
 
         enable();
-        delayMicroseconds(__pulseLengthMicros);
+        delayMicroseconds(_pulseLengthMicros);
         disable();
 
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
