@@ -16,6 +16,7 @@ FlipTheDot_FP2800a	     KEYWORD1	FP2800a
 pulse           KEYWORD2
 setOutput       KEYWORD2
 getOutput       KEYWORD2
+getOutputMax    KEYWORD2
 setData         KEYWORD2
 setPulseLength  KEYWORD2
 getPulseLength  KEYWORD2

@@ -6,8 +6,8 @@
   plus 1 pin for data (source/sink mode) and 1 pin to enable the output.
 
   The selection of the output is done in a binary definition, with low and high levels on the 5 pins.
-  These pins are label in the datasheet as A0, A1, B0, B1 and B2 – which has nothing todo with the Arduino Pins A0->Ax.
-  Only one output can be selected at the same time.
+  These pins are label in the datasheet as A0, A1, B0, B1 and B2 – which has nothing todo with the Arduino analog pins A0->Ax.
+  Only one output can be selected at the same time – like a line decoder.
 
   The "data" pin decides if the output should act as source or sink.
   By setting this pin low, the selected output will be defined as sink or if high as source to send power from VSS to the connected circuit.
