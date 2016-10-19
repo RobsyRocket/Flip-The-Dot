@@ -6,7 +6,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-FlipTheDot_FP2800a	     KEYWORD1	FP2800a
+FlipTheDot_FP2800a          KEYWORD1    FP2800a
+FlipTheDot_FP2800aMulti     KEYWORD1    FP2800aMulti
 
 
 #######################################
