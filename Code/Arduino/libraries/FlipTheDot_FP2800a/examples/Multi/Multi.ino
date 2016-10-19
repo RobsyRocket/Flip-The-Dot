@@ -13,10 +13,10 @@
 
 // uncomment these lines to get some debug informations via the defined Serial connection
 /*
-*/
 #ifndef FlipTheDot_FP2800aMulti_DEBUG_SERIAL
 #define FlipTheDot_FP2800aMulti_DEBUG_SERIAL Serial
 #endif
+*/
 
 // include the library
 #include "FlipTheDot_FP2800aMulti.h"
