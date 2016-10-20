@@ -33,9 +33,9 @@ const int fp2800a_pin_ENABLE_5  = A5;
 
 const int fp2800a_pin_A0        = 2; // D2
 const int fp2800a_pin_A1        = 3; // D3
-const int fp2800a_pin_B0        = 4; // D4
-const int fp2800a_pin_B1        = 5; // D5
-const int fp2800a_pin_B2        = 6; // D6
+const int fp2800a_pin_A2        = 4; // D4
+const int fp2800a_pin_B0        = 5; // D5
+const int fp2800a_pin_B1        = 6; // D6
 
 const int fp2800a_pulse_length  = 100; // microseconds
 
@@ -57,9 +57,9 @@ FlipTheDot_FP2800aMulti controller(
                             fp2800a_pin_DATA,
                             fp2800a_pin_A0,
                             fp2800a_pin_A1,
+                            fp2800a_pin_A2,
                             fp2800a_pin_B0,
                             fp2800a_pin_B1,
-                            fp2800a_pin_B2,
                             fp2800a_pulse_length
 );
 
