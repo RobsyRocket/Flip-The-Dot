@@ -2,7 +2,7 @@
   Multi
   Iterate thru the output numbers from 1 to 28 of multiple ICs and both data pin states, repeatedly.
 
-  More details are available in the example "Basic" and the definition of class FlipTheDot_FP2800a.
+  More details are available in the example "Default" and the definition of class FlipTheDot_FP2800a.
   
   This example code is in the public domain.
 
