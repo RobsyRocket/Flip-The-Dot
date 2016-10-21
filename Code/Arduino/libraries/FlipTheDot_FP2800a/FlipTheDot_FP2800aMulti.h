@@ -150,7 +150,7 @@ bool FlipTheDot_FP2800aMulti::setOutput(unsigned int no)
     _pinEnable = _pinEnableList[_selectedEnableNo];
     
     #ifdef FlipTheDot_FP2800aMulti_DEBUG_SERIAL
-    FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print("FlipTheDot_FP2800aMulti_DEBUG_SERIAL output ");
+    FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print("FlipTheDot_FP2800aMulti output ");
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(enable_no*_maxOutputsOnChip+no);
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(" selected (mapped to ");
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(no);
@@ -177,7 +177,7 @@ unsigned int FlipTheDot_FP2800aMulti::getOutput()
 unsigned int FlipTheDot_FP2800aMulti::getOutputMax()
 {
     #ifdef FlipTheDot_FP2800aMulti_DEBUG_SERIAL
-    FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print("FlipTheDot_FP2800aMulti_DEBUG_SERIAL max outputs: ");
+    FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print("FlipTheDot_FP2800aMulti max outputs: ");
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(_maxOutputsOnChip * _pinEnableListLength);
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(" (");
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(_maxOutputsOnChip);
