@@ -1,0 +1,282 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Flipdot Wiring Example"
+Date "2016-10-23"
+Rev "1"
+Comp "Flip-The-Dot"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L D D1
+U 1 1 580D0EB9
+P 5000 2450
+F 0 "D1" H 5000 2550 50  0000 C CNN
+F 1 "D" H 5000 2350 50  0000 C CNN
+F 2 "" H 5000 2450 50  0000 C CNN
+F 3 "" H 5000 2450 50  0000 C CNN
+	1    5000 2450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D2
+U 1 1 580D0EF8
+P 5000 2950
+F 0 "D2" H 5000 3050 50  0000 C CNN
+F 1 "D" H 5000 2850 50  0000 C CNN
+F 2 "" H 5000 2950 50  0000 C CNN
+F 3 "" H 5000 2950 50  0000 C CNN
+	1    5000 2950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L INDUCTOR L1
+U 1 1 580D0F9C
+P 4600 2700
+F 0 "L1" V 4550 2700 50  0000 C CNN
+F 1 "INDUCTOR" V 4700 2700 50  0000 C CNN
+F 2 "" H 4600 2700 50  0000 C CNN
+F 3 "" H 4600 2700 50  0000 C CNN
+	1    4600 2700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D5
+U 1 1 580D1065
+P 6400 2450
+F 0 "D5" H 6400 2550 50  0000 C CNN
+F 1 "D" H 6400 2350 50  0000 C CNN
+F 2 "" H 6400 2450 50  0000 C CNN
+F 3 "" H 6400 2450 50  0000 C CNN
+	1    6400 2450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D6
+U 1 1 580D106B
+P 6400 2950
+F 0 "D6" H 6400 3050 50  0000 C CNN
+F 1 "D" H 6400 2850 50  0000 C CNN
+F 2 "" H 6400 2950 50  0000 C CNN
+F 3 "" H 6400 2950 50  0000 C CNN
+	1    6400 2950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L INDUCTOR L3
+U 1 1 580D1071
+P 6000 2700
+F 0 "L3" V 5950 2700 50  0000 C CNN
+F 1 "INDUCTOR" V 6100 2700 50  0000 C CNN
+F 2 "" H 6000 2700 50  0000 C CNN
+F 3 "" H 6000 2700 50  0000 C CNN
+	1    6000 2700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D3
+U 1 1 580D1165
+P 5000 3950
+F 0 "D3" H 5000 4050 50  0000 C CNN
+F 1 "D" H 5000 3850 50  0000 C CNN
+F 2 "" H 5000 3950 50  0000 C CNN
+F 3 "" H 5000 3950 50  0000 C CNN
+	1    5000 3950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D4
+U 1 1 580D116B
+P 5000 4450
+F 0 "D4" H 5000 4550 50  0000 C CNN
+F 1 "D" H 5000 4350 50  0000 C CNN
+F 2 "" H 5000 4450 50  0000 C CNN
+F 3 "" H 5000 4450 50  0000 C CNN
+	1    5000 4450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L INDUCTOR L2
+U 1 1 580D1171
+P 4600 4200
+F 0 "L2" V 4550 4200 50  0000 C CNN
+F 1 "INDUCTOR" V 4700 4200 50  0000 C CNN
+F 2 "" H 4600 4200 50  0000 C CNN
+F 3 "" H 4600 4200 50  0000 C CNN
+	1    4600 4200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D7
+U 1 1 580D1181
+P 6400 3950
+F 0 "D7" H 6400 4050 50  0000 C CNN
+F 1 "D" H 6400 3850 50  0000 C CNN
+F 2 "" H 6400 3950 50  0000 C CNN
+F 3 "" H 6400 3950 50  0000 C CNN
+	1    6400 3950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D8
+U 1 1 580D1187
+P 6400 4450
+F 0 "D8" H 6400 4550 50  0000 C CNN
+F 1 "D" H 6400 4350 50  0000 C CNN
+F 2 "" H 6400 4450 50  0000 C CNN
+F 3 "" H 6400 4450 50  0000 C CNN
+	1    6400 4450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L INDUCTOR L4
+U 1 1 580D118D
+P 6000 4200
+F 0 "L4" V 5950 4200 50  0000 C CNN
+F 1 "INDUCTOR" V 6100 4200 50  0000 C CNN
+F 2 "" H 6000 4200 50  0000 C CNN
+F 3 "" H 6000 4200 50  0000 C CNN
+	1    6000 4200
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5000 2600 5000 2800
+Wire Wire Line
+	4900 2700 5000 2700
+Connection ~ 5000 2700
+Wire Wire Line
+	4300 2700 4200 2700
+Wire Wire Line
+	4200 2700 4200 5200
+Wire Wire Line
+	5000 3100 5000 3200
+Wire Wire Line
+	5000 3200 7000 3200
+Wire Wire Line
+	5000 2300 5000 2200
+Wire Wire Line
+	5000 2200 7000 2200
+Wire Wire Line
+	6400 2600 6400 2800
+Wire Wire Line
+	6300 2700 6400 2700
+Connection ~ 6400 2700
+Wire Wire Line
+	5700 2700 5600 2700
+Wire Wire Line
+	5600 2700 5600 5200
+Wire Wire Line
+	6400 2200 6400 2300
+Wire Wire Line
+	5000 4100 5000 4300
+Wire Wire Line
+	4900 4200 5000 4200
+Connection ~ 5000 4200
+Wire Wire Line
+	5000 4600 5000 4700
+Wire Wire Line
+	5000 3800 5000 3700
+Wire Wire Line
+	5000 3700 7000 3700
+Wire Wire Line
+	6400 4100 6400 4300
+Wire Wire Line
+	6300 4200 6400 4200
+Connection ~ 6400 4200
+Wire Wire Line
+	5700 4200 5600 4200
+Connection ~ 5600 4200
+Wire Wire Line
+	5000 4700 7000 4700
+Wire Wire Line
+	6400 4700 6400 4600
+Connection ~ 6400 4700
+Wire Wire Line
+	6400 3800 6400 3700
+Connection ~ 6400 3700
+Wire Wire Line
+	4300 4200 4200 4200
+Connection ~ 4200 4200
+Wire Notes Line
+	6600 3300 6600 2100
+Wire Notes Line
+	6600 2100 5500 2100
+Wire Notes Line
+	5500 2100 5500 3300
+Wire Notes Line
+	5500 3300 6600 3300
+Wire Notes Line
+	5500 3600 6600 3600
+Wire Notes Line
+	6600 3600 6600 4800
+Wire Notes Line
+	6600 4800 5500 4800
+Wire Notes Line
+	5500 4800 5500 3600
+Wire Notes Line
+	5200 3600 4100 3600
+Wire Notes Line
+	4100 3600 4100 4800
+Wire Notes Line
+	4100 4800 5200 4800
+Wire Notes Line
+	5200 4800 5200 3600
+Wire Notes Line
+	5200 3300 5200 2100
+Wire Notes Line
+	5200 2100 4100 2100
+Wire Notes Line
+	4100 2100 4100 3300
+Wire Notes Line
+	4100 3300 5200 3300
+Text GLabel 7000 2200 2    60   Input ~ 0
+SET_ROW_0
+Text GLabel 7000 3700 2    60   Input ~ 0
+SET_ROW_1
+Text GLabel 7000 3200 2    60   Input ~ 0
+RESET_ROW_0
+Text GLabel 7000 4700 2    60   Input ~ 0
+RESET_ROW_1
+Text GLabel 4200 5200 3    60   Input ~ 0
+COL_0
+Text GLabel 5600 5200 3    60   Input ~ 0
+COL_1
+Wire Wire Line
+	6400 3100 6400 3200
+Connection ~ 6400 3200
+$EndSCHEMATC
