@@ -51,7 +51,8 @@
     Symbol Legend:
     ¯¯¯¯¯¯¯¯¯¯¯¯¯¯
             ├──o  IO
-            ├──>  Input
+            ├──<  Input
+            ├──>  Output
             ├──►  Positiv Voltage
             ├──|· Ground
             ├──x  unused
