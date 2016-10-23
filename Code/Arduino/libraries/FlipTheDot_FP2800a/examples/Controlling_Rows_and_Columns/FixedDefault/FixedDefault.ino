@@ -13,17 +13,16 @@
 
   Schematic for the wiring of a single flipdot:
   
-          coil      ┌──────< SET_ROW    (goes to the IC with fixed HIGH data line)
-            │      _│_
+          coil      ┌──────< SET_ROW    (goes to one output of the IC with fixed HIGH data line)
+            |      _│_
             V      \│/    <-- diode
                    ─┼─
         ┌┐┌┐┌┐┌┐    │
-   ┌────┘└┘└┘└┘└────┤
-   │                │
+   ┌────┘└┘└┘└┘└────●
    │               _│_
    ^               \│/
   COL              ─┼─      
-                    └──────< RESET_ROW  (goes to the IC with fixed LOW data line)
+                    └──────< RESET_ROW  (goes to output of the IC with fixed LOW data line)
 
 
   This example code is in the public domain.
