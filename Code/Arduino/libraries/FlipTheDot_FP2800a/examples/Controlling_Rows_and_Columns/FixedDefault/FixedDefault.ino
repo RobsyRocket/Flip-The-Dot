@@ -11,24 +11,24 @@
   when needed, this implementation change the enable pin to enable the first or the second FP2800a ICs.  
 
 
-  Schematic for the wiring for a single flipdot:
+  Schematic for the wiring of a single flipdot:
   
-          coil      ┌──────< SET_ROW    (goes to the fixed IC with HIGH data line)
-            ┆      _│_
+          coil      ┌──────< SET_ROW    (goes to the IC with fixed HIGH data line)
+            │      _│_
             V      \│/    <-- diode
                    ─┼─
-        ╭╮╭╮╭╮╭╮    │
+        ┌┐┌┐┌┐┌┐    │
    ┌────┘└┘└┘└┘└────┤
    │                │
-   │               ─┼─
-   ^               /│\
-  COL              ¯│¯      
-                    └──────< RESET_ROW  (goes to the fixed IC with LOW data line)
+   │               _│_
+   ^               \│/
+  COL              ─┼─      
+                    └──────< RESET_ROW  (goes to the IC with fixed LOW data line)
 
 
   This example code is in the public domain.
 
-  modified 22 October 2016
+  modified 23 October 2016
   by Robert Römer
  */
 
