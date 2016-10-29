@@ -55,7 +55,7 @@ bool FlipTheDot_FP2800aFixed::setData(bool is_high)
     if ( isEnabled() == true )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a data cannot be changed when IC is already enabled");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a data cannot be changed when IC is already enabled") );
         #endif
         return false;
     }
@@ -63,9 +63,9 @@ bool FlipTheDot_FP2800aFixed::setData(bool is_high)
     _pinEnable = is_high == true ? _pinEnableSet : _pinEnableReset;
     
     #ifdef FlipTheDot_FP2800aFixed_DEBUG_SERIAL
-    FlipTheDot_FP2800aFixed_DEBUG_SERIAL.print("FlipTheDot_FP2800aFixed data updated by switching enable pin numbers (");
-    FlipTheDot_FP2800aFixed_DEBUG_SERIAL.print(_pinEnable == _pinEnableSet ? "HIGH" : "LOW");
-    FlipTheDot_FP2800aFixed_DEBUG_SERIAL.println(")");
+    FlipTheDot_FP2800aFixed_DEBUG_SERIAL.print( F("FlipTheDot_FP2800aFixed data updated by switching enable pin numbers (") );
+    FlipTheDot_FP2800aFixed_DEBUG_SERIAL.print(_pinEnable == _pinEnableSet ? F("HIGH") : F("LOW"));
+    FlipTheDot_FP2800aFixed_DEBUG_SERIAL.println( F(")") );
     #endif
 
     return true;

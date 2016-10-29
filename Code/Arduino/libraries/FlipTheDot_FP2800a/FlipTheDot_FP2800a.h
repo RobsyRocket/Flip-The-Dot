@@ -155,7 +155,7 @@ FlipTheDot_FP2800a::FlipTheDot_FP2800a(unsigned int pinEnable, unsigned int pinD
     {
       // some of the pins are equal => not allowed
       #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-      //FlipTheDot_FP2800a_DEBUG_SERIAL.println("Pin configuration for FlipTheDot_FP2800a is not valid: duplicate pin detected");
+      //FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("Pin configuration for FlipTheDot_FP2800a is not valid: duplicate pin detected") );
       #endif
       while(1);
     }
@@ -222,7 +222,7 @@ void FlipTheDot_FP2800a::_initPins()
     digitalWrite(_pinB1, LOW);
 
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    //FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a pins initialized");
+    //FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a pins initialized") );
     #endif
 }
 
@@ -236,16 +236,16 @@ bool FlipTheDot_FP2800a::setData(bool is_high)
     if ( isEnabled() == true )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a data cannot be changed when IC is already enabled");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a data cannot be changed when IC is already enabled") );
         #endif
         return false;
     }
 
 
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a data updated (");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.print( F("FlipTheDot_FP2800a data updated (") );
     FlipTheDot_FP2800a_DEBUG_SERIAL.print(is_high ? "HIGH" : "LOW");
-    FlipTheDot_FP2800a_DEBUG_SERIAL.println(")");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.println( F(")") );
     #endif
 
     digitalWrite(_pinData, is_high == true ? HIGH : LOW);
@@ -281,7 +281,7 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
     if ( isEnabled() == true )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a output cannot be selected when IC is already enabled");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a output cannot be selected when IC is already enabled") );
         #endif
         return false;
     }
@@ -289,7 +289,7 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
     if ( _selectedOutput == no )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a Output already selected: ");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print( F("FlipTheDot_FP2800a Output already selected: ") );
         FlipTheDot_FP2800a_DEBUG_SERIAL.println(no);
         #endif
         return true;
@@ -297,9 +297,9 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
     else if ( no < 1 || no > _maxOutputsOnChip )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a selected output ");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print( F("FlipTheDot_FP2800a selected output ") );
         FlipTheDot_FP2800a_DEBUG_SERIAL.print(no);
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print(" is out of range 1 to ");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print( F(" is out of range 1 to ") );
         FlipTheDot_FP2800a_DEBUG_SERIAL.println(_maxOutputsOnChip);
         #endif
         return false;
@@ -371,9 +371,9 @@ bool FlipTheDot_FP2800a::setOutput(unsigned int no)
         }
 
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a output ");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print( F("FlipTheDot_FP2800a output ") );
         FlipTheDot_FP2800a_DEBUG_SERIAL.print(_selectedOutput);
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println(" selected");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println( F(" selected") );
         #endif
 
         return true;
@@ -406,7 +406,7 @@ unsigned int FlipTheDot_FP2800a::getOutputMax()
 void FlipTheDot_FP2800a::enable()
 {
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a enabling");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a enabling") );
     #endif
     _isEnabled = true;
     digitalWrite(_pinEnable, HIGH);
@@ -421,7 +421,7 @@ void FlipTheDot_FP2800a::disable()
     digitalWrite(_pinEnable, LOW);
     _isEnabled = false;
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a disabled");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a disabled") );
     #endif
 }
 
@@ -432,7 +432,7 @@ void FlipTheDot_FP2800a::disable()
 bool FlipTheDot_FP2800a::isEnabled()
 {
     #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-    FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a get enable state");
+    FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a get enable state") );
     #endif
     return _isEnabled;
 }
@@ -446,9 +446,9 @@ void FlipTheDot_FP2800a::pulse()
     if ( _pulseLengthMicros > 0 )
     {
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.print("FlipTheDot_FP2800a start pulse with length ");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.print( F("FlipTheDot_FP2800a start pulse with length ") );
         FlipTheDot_FP2800a_DEBUG_SERIAL.print(_pulseLengthMicros);
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println(" microseconds");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println( F(" microseconds") );
         #endif
 
         enable();
@@ -456,7 +456,7 @@ void FlipTheDot_FP2800a::pulse()
         disable();
 
         #ifdef FlipTheDot_FP2800a_DEBUG_SERIAL
-        FlipTheDot_FP2800a_DEBUG_SERIAL.println("FlipTheDot_FP2800a finished pulse");
+        FlipTheDot_FP2800a_DEBUG_SERIAL.println( F("FlipTheDot_FP2800a finished pulse") );
         #endif
     }
 }
