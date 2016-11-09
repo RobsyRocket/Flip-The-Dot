@@ -54,8 +54,8 @@ const int fp2800a_pulse_length  = 100; // microseconds
 
 // setup the objects for the FP2800a rows and columns controller
 // Parameter order:                 Enable, Data,  A0, A1, A2, B0, B1,  Pulse length
-FlipTheDot_FP2800a rowController(    2,      3,     4,  5,  6,  7,  8,  fp2800a_pulse_length);
-FlipTheDot_FP2800a columnController(10,     A1,    A0, 12, 11, A3, A2,  fp2800a_pulse_length);
+FlipTheDot_FP2800a rowController(   A0,     2,     3,  4,  5,  6,  7,   fp2800a_pulse_length);
+FlipTheDot_FP2800a columnController(A1,     8,     9,  10, 11, 12, 13,  fp2800a_pulse_length);
 
 
 // wrap independent column and row controllers in one object for easier usage
