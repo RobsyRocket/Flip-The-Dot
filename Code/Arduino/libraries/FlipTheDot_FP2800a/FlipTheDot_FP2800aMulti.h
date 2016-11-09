@@ -176,6 +176,8 @@ unsigned int FlipTheDot_FP2800aMulti::getOutput()
  */
 unsigned int FlipTheDot_FP2800aMulti::getOutputMax()
 {
+    // Dont active if this method gets called before FlipTheDot_FP2800aMulti_DEBUG_SERIAL.begin(...)
+    /* 
     #ifdef FlipTheDot_FP2800aMulti_DEBUG_SERIAL
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print( F("FlipTheDot_FP2800aMulti max outputs: ") );
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(_maxOutputsOnChip * _pinEnableListLength);
@@ -185,6 +187,7 @@ unsigned int FlipTheDot_FP2800aMulti::getOutputMax()
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.print(_pinEnableListLength);
     FlipTheDot_FP2800aMulti_DEBUG_SERIAL.println( F(")") );
     #endif
+    */
     return _maxOutputsOnChip * _pinEnableListLength;
 }
 
