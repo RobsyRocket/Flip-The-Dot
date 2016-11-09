@@ -50,7 +50,7 @@
 // defining the pulse length for the FP2800a enable pins
 const int fp2800a_pulse_length  = 100; // microseconds
 
-// setup the objects for the fixed FP2800a rows controller and FP2800aMulti columns controller
+// setup the objects for the fixed FP2800a rows controller and FP2800a columns controller
 // Parameter order:                      Enable Reset, Enable Set,  A0, A1, A2, B0, B1,  Pulse length
 FlipTheDot_FP2800aFixed rowController(   A0,           2,           3,  4,  5,  6,  7,   fp2800a_pulse_length);
 // Parameter order:                      Enable,       Data,        A0, A1, A2, B0, B1,  Pulse length
