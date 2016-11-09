@@ -1,0 +1,26 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+FlipTheDot_ColumnRowController	KEYWORD1	ColumnRowController
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setPulseLength  KEYWORD2
+getPulseLength  KEYWORD2
+show            KEYWORD2
+hide            KEYWORD2
+flip            KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
