@@ -23,7 +23,7 @@ class FlipTheDot_ColumnRowController
         boolean show(unsigned int col, unsigned int row);
         boolean hide(unsigned int col, unsigned int row);
         boolean flip(unsigned int col, unsigned int row, boolean show);
-    private:
+    protected:
         FlipTheDot_FP2800a *_colCtrl;
         FlipTheDot_FP2800a *_rowCtrl;
 
