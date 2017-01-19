@@ -25,13 +25,13 @@ class FlipTheDot_FP2800aMulti : public FlipTheDot_FP2800a
         bool setOutput(unsigned int no);
         unsigned int getOutput();
         unsigned int getOutputMax();
-        void FlipTheDot_FP2800aMulti::_initPins();
     
     protected:
         byte _selectedEnableNo = 0;
         unsigned int *_pinEnableList;
         unsigned int _pinEnableListLength = 0;
         bool _hasDuplicatePins();
+        void _initPins();
 };
 
 
