@@ -11,6 +11,8 @@
 #define FlipTheDot_ColumnRowController_h
 
 
+#include "FlipTheDot_FP2800a.h"
+
 
 class FlipTheDot_ColumnRowController
 {
