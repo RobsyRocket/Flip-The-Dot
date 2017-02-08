@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP TSR-1
+D Step-down switching regulator as pin compatible drop-in replacement for 78xx linear regulators.
+K power regulator, switching regulator, regulator, step-down, dc-dc, traco power
+F http://www.tracopower.com/products/tsr1.pdf
+$ENDCMP
+#
+#End Doc Library
