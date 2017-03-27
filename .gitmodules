@@ -1,0 +1,3 @@
+[submodule "Code/Arduino/libraries/Adafruit_GFX"]
+	path = Code/Arduino/libraries/Adafruit_GFX
+	url = git://github.com/adafruit/Adafruit-GFX-Library.git
