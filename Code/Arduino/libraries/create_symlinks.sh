@@ -26,6 +26,7 @@ if [[ -d "$target_path" ]] ; then
 	createIfNotExists FlipTheDot_FP2800a "$target_path"
 	createIfNotExists FlipTheDot_ColumnRowController "$target_path"
 	createIfNotExists FlipTheDot_Matrix "$target_path"
+	createIfNotExists FlipTheDot_Lawo28x13 "$target_path"
 else
 	echo "Target path doesn't exists: $target_path"
 fi
