@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+FlipTheDot_IMatrix	KEYWORD1	IMatrix
+FlipTheDot_Matrix	KEYWORD1	Matrix
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+flip            KEYWORD2
+height          KEYWORD2
+width           KEYWORD2
+show            KEYWORD2
+hide            KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
