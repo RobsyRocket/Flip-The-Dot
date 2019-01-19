@@ -2,14 +2,17 @@
 #define __setup_h__
 
 
+#define SerialDisplay Serial
 
-#if DEBUG
+
+#if DEBUG == 1
+  #warning Setting up Hardware serial for debugging on the same connection as the display serial
   #define SerialDebug Serial
-  #define SerialDisplay Serial
-#else
-  #include <SoftwareSerial.h>
-  extern SoftwareSerial SerialDebug;
-  #define SerialDisplay Serial
+#endif
+#if DEBUG == 2
+  #warning Setting up SoftwareSerial debugging
+  #include "SoftwareSerial.h"
+  SoftwareSerial SerialDebug(14, 12, false, 256);
 #endif
 
 #if DEBUG

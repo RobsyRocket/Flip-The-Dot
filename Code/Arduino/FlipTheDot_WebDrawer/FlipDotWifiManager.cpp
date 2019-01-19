@@ -1,5 +1,4 @@
 #include "FlipDotWifiManager.h"
-#include "setup.h"
 
 FlipDotWifiManager::FlipDotWifiManager(const char *hostAndPortalName) {
   _hostAndPortalName = hostAndPortalName;

@@ -3,10 +3,8 @@
 #define DEBUG 0
 
 
-#include "setup.h"
-#if !DEBUG
-SoftwareSerial SerialDebug(14, 12, false, 256);
-#endif
+#include "setupSerial.h"
+
 
 #include "FlipDotWifiManager.h"
 
@@ -38,7 +36,7 @@ void setup() {
 
   SerialDisplay.begin(115200);
   // begin SerialDebug only when it is not declared with a define, otherwise it will be equal to SerialDisplay, which got begin already called
-  #ifndef SerialDebug
+  #if DEBUG == 2
     SerialDebug.begin(115200);
     PRINTSLN("");
   #endif

@@ -1,6 +1,8 @@
 #ifndef FlipDotWifiManager_h
 #define FlipDotWifiManager_h
 
+#include "setupSerial.h"
+
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager
 #include <ESP8266mDNS.h>
 
