@@ -12,12 +12,6 @@ bool serverHandleConfigUpdate() {
         PRINTSLN(server.argName(i) + " is empty and therefore ignored");
         continue;
       }
-      if ( server.argName(i) == "offTime" ) {
-        offTime = server.arg(i).toInt();
-      }
-      else if ( server.argName(i) == "onTime" ) {
-        onTime = server.arg(i).toInt();
-      }
       else if ( server.argName(i) == "deviceName" ) {
         deviceName = server.arg(i);
       }
@@ -77,22 +71,9 @@ bool configLoad() {
   if ( json.containsKey("deviceName") ) {
     deviceName = json.get<String>("deviceName");
   }
-  if ( json.containsKey("offTime") ) {
-    offTime = json["offTime"];
-  }
-  if ( json.containsKey("onTime") ) {
-    onTime = json["onTime"];
-  }
-
-  // Real world application would store these values in some variables for
-  // later use.
 
   PRINTS("Loaded deviceName: ");
   PRINTSLN(deviceName);
-  PRINTS("Loaded offTime: ");
-  PRINTSLN(offTime);
-  PRINTS("Loaded onTime: ");
-  PRINTSLN(onTime);
   return true;
 }
 
@@ -100,8 +81,6 @@ bool configSave() {
   StaticJsonBuffer<200> jsonBuffer;
   JsonObject& json = jsonBuffer.createObject();
   json["deviceName"] = deviceName;
-  json["offTime"] = offTime;
-  json["onTime"] = onTime;
 
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {

@@ -83,16 +83,8 @@ void setup() {
 }
 
 void loop() {
-  // Do work:
-
   // satisfy ESP8266 background processes
   yield();
   // HTTP
   server.handleClient();
-
-  // show that the device is still alive
-  digitalWrite(led_pin, HIGH);
-  delay(offTime);
-  digitalWrite(led_pin, LOW);
-  delay(onTime);
 }
