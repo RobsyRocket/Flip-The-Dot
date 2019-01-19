@@ -9,8 +9,9 @@
 
 class FlipDotWifiManager {
     public:
-      FlipDotWifiManager(const char *hostAndPortalName);
+      FlipDotWifiManager(const char *hostAndPortalName, bool debugEnabled = false);
       WiFiManager *bootstrapWifiManager(bool isOnDemand);
+      bool setTimeout(unsigned int seconds);
       bool setupMDNS();
       void setupPortal();
       void postConnect();
@@ -23,6 +24,8 @@ class FlipDotWifiManager {
       const char *_hostAndPortalName;
       unsigned int _timeout = 60;
       WiFiManagerParameter *_customParamNewDeviceName;
+      bool _debugEnabled = true;
+      unsigned int length(const char * str);
 };
 
 #endif

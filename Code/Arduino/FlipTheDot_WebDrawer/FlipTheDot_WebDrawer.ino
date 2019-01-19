@@ -13,9 +13,6 @@
 #include <ArduinoJson.h>
 #include "FS.h"
 
-//needed for library
-#include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager
-
 
 // TODO think about if this is needed or can be solved differently
 unsigned int offTime = 200;
@@ -26,13 +23,17 @@ int led_pin = LED_BUILTIN;
 String deviceName = "FlipDot";
 
 ESP8266WebServer server(80);  //port 80
-FlipDotWifiManager wifiManager(deviceName.c_str());
+#if defined(DEBUG) && DEBUG
+FlipDotWifiManager wifiManager(deviceName.c_str(), true);
+#else
+FlipDotWifiManager wifiManager(deviceName.c_str(), false);
+#endif
+  
 
 void setup() {
   /* switch on led */
   pinMode(led_pin, OUTPUT);
   digitalWrite(led_pin, LOW);
-
 
   SerialDisplay.begin(115200);
   // begin SerialDebug only when it is not declared with a define, otherwise it will be equal to SerialDisplay, which got begin already called

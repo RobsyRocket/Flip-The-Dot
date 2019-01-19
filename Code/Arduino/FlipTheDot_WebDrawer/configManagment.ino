@@ -67,13 +67,16 @@ bool configLoad() {
     PRINTSLN("Failed to parse config file");
     return false;
   }
+  
+  PRINTS("json contains key \"deviceName\": ");
+  PRINTSLN(json.containsKey("deviceName"));
+  PRINTS("json value \"deviceName\": ");
+  PRINTSLN(json.get<String>("deviceName"));
 
-  if ( json.containsKey("deviceName") ) {
+  if ( json.containsKey("deviceName") && json.get<String>("deviceName") != "" ) {
     deviceName = json.get<String>("deviceName");
   }
 
-  PRINTS("Loaded deviceName: ");
-  PRINTSLN(deviceName);
   return true;
 }
 

@@ -1,8 +1,9 @@
 #include "FlipDotWifiManager.h"
 
-FlipDotWifiManager::FlipDotWifiManager(const char *hostAndPortalName) {
+FlipDotWifiManager::FlipDotWifiManager(const char *hostAndPortalName, bool debugEnabled) {
   _hostAndPortalName = hostAndPortalName;
-
+  _debugEnabled = debugEnabled;
+  
   // maxium length of 32 due SSID length limit
   // pattern to ensure that only names can be enter which can work as names for the SSID, hostname and webserver domain
   _customParamNewDeviceName = new WiFiManagerParameter("new_device_name", "New device name", "", 32, " pattern=\"[A-Za-z]([A-Za-z0-9-]*[A-Za-z0-9])\"");
@@ -10,6 +11,8 @@ FlipDotWifiManager::FlipDotWifiManager(const char *hostAndPortalName) {
 
 bool FlipDotWifiManager::setName(const char *hostAndPortalName) {
   // TODO validation needed, 1. length must be between 1 and 32, 2. pattern [A-Za-z][A-Za-z0-9-]*[A-Za-z0-9]
+  PRINTS("setName: ");
+  PRINTSLN(hostAndPortalName);
   if ( WiFi.hostname(hostAndPortalName) ) {
     _hostAndPortalName = hostAndPortalName;
     setupMDNS();
@@ -22,26 +25,28 @@ String FlipDotWifiManager::getName() {
   return String(_hostAndPortalName);
 };
 
+bool FlipDotWifiManager::setTimeout(unsigned int seconds) {
+  _timeout = seconds;
+  return true;
+};
+
 WiFiManager *FlipDotWifiManager::bootstrapWifiManager(bool isOnDemand) {
   //WiFiManager
   //Local intialization. Once its business is done, there is no need to keep it around
   WiFiManager *wifiManager = new WiFiManager();
 
+  wifiManager->setDebugOutput(_debugEnabled);
+  
   // add parameter to enable renaming of the device
   wifiManager->addParameter(_customParamNewDeviceName);
 
   if ( isOnDemand == true ) {
-    wifiManager->setTimeout(_timeout);
+    wifiManager->setConfigPortalTimeout(_timeout);
   }
 
   // WITHOUT THIS THE AP DOES NOT SEEM TO WORK PROPERLY WITH SDK 1.5 , update to at least 1.5.1
   WiFi.mode(WIFI_STA);
-  
-  #if DEBUG 
-    wifiManager->setDebugOutput(true);
-  #else
-    wifiManager->setDebugOutput(false);
-  #endif
+
   return wifiManager;
 }
 
@@ -62,6 +67,7 @@ void FlipDotWifiManager::setupPortal() {
 };
 
 bool FlipDotWifiManager::setupMDNS(){
+    PRINTSLN("setupMDNS");
   // Set up mDNS responder:
   // - first argument is the domain name, in this example
   //   the fully-qualified domain name is "esp8266.local"
@@ -80,13 +86,23 @@ bool FlipDotWifiManager::setupMDNS(){
   
     PRINTSLN("mDNS responder started");
     PRINTS("Look for network device named: ");
-    PRINTSLN(_hostAndPortalName);
+    PRINTS(_hostAndPortalName);
+    PRINTSLN(".local");
     return true;
   }
 };
 
+unsigned int FlipDotWifiManager::length(const char * str) {
+    int Size = 0;
+    while (str[Size] != '\0') Size++;
+    return Size;
+}
+
 bool FlipDotWifiManager::reconnect() {
   WiFiManager *wifiManager = bootstrapWifiManager(true);
+  PRINTSLN("reconnect");
+  PRINTS("Portal Name:");
+  PRINTSLN(_hostAndPortalName);
   if ( !wifiManager->autoConnect(_hostAndPortalName) ) {
       PRINTSLN("failed to connect and hit timeout");
       return false;
@@ -98,8 +114,7 @@ bool FlipDotWifiManager::reconnect() {
 void FlipDotWifiManager::postConnect() {
   //if you get here you have connected to the WiFi
   PRINTSLN("connected to WiFi network");
-
-  if ( _customParamNewDeviceName->getValueLength() > 0 ) {
+  if ( length(_customParamNewDeviceName->getValue()) != 0 ) {
     setName(_customParamNewDeviceName->getValue());
   }
   else {
