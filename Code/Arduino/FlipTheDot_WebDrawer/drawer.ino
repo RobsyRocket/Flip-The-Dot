@@ -17,13 +17,15 @@ void drawerServerHandleConfig() {
 }
 
 bool drawerConfigUpdate() {
-  StaticJsonBuffer<80> jsonBuffer;
+  StaticJsonBuffer<160> jsonBuffer;
   JsonObject& root = jsonBuffer.parseObject(server.arg("plain"));
 
   if (!root.success()) {
     PRINTSLN("Failed to parse incomming JSON");
     return false;
   }
+
+  // TODO validate and sanitize incomming data
 
   File configFile = SPIFFS.open("/drawer/config.json", "w");
   if (!configFile) {

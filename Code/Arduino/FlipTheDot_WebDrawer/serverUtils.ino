@@ -20,9 +20,9 @@ String getRequestInformationOutput()
     } else {
         message += "Connected through WiFi network: " + WiFi.SSID() + "\n";
     }
-    message += String() + "Client IP: " + toStringIp(server.client().remoteIP()) + "\n";
-    message += String() + "Server IP: " + toStringIp(server.client().localIP()) + "\n";
-    message += String() + "Server Name: " + WiFi.hostname() + "\n";
+    message += "Client IP: " + toStringIp(server.client().remoteIP()) + "\n";
+    message += "Server IP: " + toStringIp(server.client().localIP()) + "\n";
+    message += "Server Name: " + WiFi.hostname() + "\n";
   
     message += "Requested URI: ";
     message += server.uri();
@@ -39,6 +39,11 @@ String getRequestInformationOutput()
     for ( uint8_t i = 0; i < server.args(); i++ ) {
         message += " " + server.argName ( i ) + ": " + server.arg ( i ) + "\n";
     }
+
+    #if defined(DEBUG) && DEBUG
+      message += "Free Heap: " + String(ESP.getFreeHeap()) + "\n";
+      message += "GPIO: " + String((uint32_t)(((GPI | GPO) & 0xFFFF) | ((GP16I & 0x01) << 16))) + "\n";
+    #endif
 
     return message;
 }

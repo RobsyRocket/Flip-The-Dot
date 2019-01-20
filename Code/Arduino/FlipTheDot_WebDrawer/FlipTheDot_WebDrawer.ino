@@ -84,6 +84,11 @@ void setup() {
   server.on("/drawer/commands", drawerServerHandleCommand);
   server.on("/drawer/config", drawerServerHandleConfig);
   server.on("/config", serverHandleConfigUpdate);
+  //get heap status, analog input value and all GPIO statuses in one json call
+  server.on("/status", [](){
+    server.send(200, "text/plain", getRequestInformationOutput());
+  });
+  
   server.onNotFound(handleOther);
   server.begin();
   PRINTSLN("HTTP server started");

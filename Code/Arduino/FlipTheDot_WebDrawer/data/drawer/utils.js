@@ -22,10 +22,13 @@ function configPrompt(prefix_msg) {
     // TODO validate input to check for numbers and positive values
     var width = prompt((prefix_msg ? (prefix_msg + " ") : "") + "Please specify the matrix dimension: Width");
     var height = prompt("Please specify the matrix dimension: Height");
+    var debounce = prompt("Please specify command debounce time: Milliseconds");
 
+    // might be need to be ordered alphabetically
     var configJson = {
-        width: width,
-        height: height
+        debounce: debounce,
+        height: height,
+        width: width
     };
 
     configSave(configJson, function (xhrProgressEvent) {
@@ -64,6 +67,7 @@ function initInterface(configJson) {
 
     var cMax = configJson.width;
     var rMax = configJson.height;
+    var debounceTime = configJson.debounce || 100;
     var chunksize = (2000) / (encodeURI(cMax + 'x' + rMax + 'x?' + ' ').length);
 
     var bind = function (nodeList, action, callback) {
@@ -145,7 +149,7 @@ function initInterface(configJson) {
                 }
             };
             xhr.send();
-        }, 100);
+        }, debounceTime);
     };
 
     var isActiveDrawOnMove = false;
@@ -166,7 +170,7 @@ function initInterface(configJson) {
     };
 
     var display = '<table class="display noselect">';
-    for (var r = 1; r <= rMax; r++) {
+    for (var r = rMax; r >= 1; r--) {
         display += "<tr>";
         for (var c = 1; c <= cMax; c++) {
             display += '<td data-c="' + c + '" data-r="' + r + '" data-active="0"></td>';
@@ -184,7 +188,7 @@ function initInterface(configJson) {
 
     display += 'Mode: ';
     for (var dOMA_i = 0; dOMA_i < drawActions.length; dOMA_i++) {
-        display += '<label><input type="radio" name="drawAction" id="drawAction_' + dOMA_i + '" ' + (drawCallback == drawActions[dOMA_i].callback ? 'checked' : '') + ' /><button>' + drawActions[dOMA_i].label + '</button></label>';
+        display += '<label><input type="radio" name="drawAction" id="drawAction_' + dOMA_i + '" ' + (drawCallback == drawActions[dOMA_i].callback ? 'checked' : '') + ' /><button id="drawAction_' + dOMA_i + '_btn">' + drawActions[dOMA_i].label + '</button></label>';
     }
 
     display += 'Move: ';
@@ -201,10 +205,6 @@ function initInterface(configJson) {
 
     document.body.innerHTML = display;
 
-    bind(document.getElementsByName('config'), 'click', function () {
-        configPrompt();
-    });
-
     for (var dOMA_i = 0; dOMA_i < drawActions.length; dOMA_i++) {
         (function (i, callback) {
             bind(document.getElementById('drawAction_' + i), 'change', function () {
@@ -213,6 +213,20 @@ function initInterface(configJson) {
             });
         })(dOMA_i, drawActions[dOMA_i].callback);
     }
+
+    for (var dOMA_i = 0; dOMA_i < drawActions.length; dOMA_i++) {
+        (function (i) {
+            bind(document.getElementById('drawAction_' + i + '_btn'), 'click', function () {
+                var input = document.getElementById('drawAction_' + i);
+                input.setAttribute('checked', 'checked');
+                input.onchange();
+            });
+        })(dOMA_i);
+    }
+
+    bind(document.getElementsByName('config'), 'click', function () {
+        configPrompt();
+    });
 
     bind(document.getElementsByName('do_all'), 'click', function () {
         var cells = document.getElementsByTagName('td');
