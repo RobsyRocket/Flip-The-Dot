@@ -64,8 +64,14 @@ unsigned int FlipTheDot_Matrix::height()
 
 boolean FlipTheDot_Matrix::flip(unsigned int col, unsigned int row, boolean show)
 {
-    #if FlipTheDot_Matrix_DEBUG == 1
-    Serial.print("FlipTheDot_Matrix::flip(");Serial.print(col);Serial.print(", ");Serial.print(row);Serial.print(", ");Serial.print(show);Serial.println(")");
+    #ifdef FlipTheDot_Matrix_DEBUG_SERIAL
+    FlipTheDot_Matrix_DEBUG_SERIAL.print("FlipTheDot_Matrix::flip(");
+    FlipTheDot_Matrix_DEBUG_SERIAL.print(col);
+    FlipTheDot_Matrix_DEBUG_SERIAL.print(", ");
+    FlipTheDot_Matrix_DEBUG_SERIAL.print(row);
+    FlipTheDot_Matrix_DEBUG_SERIAL.print(", ");
+    FlipTheDot_Matrix_DEBUG_SERIAL.print(show);
+    FlipTheDot_Matrix_DEBUG_SERIAL.println(")");
     #endif
     return _ctrl.flip(col, row, show);
 };
