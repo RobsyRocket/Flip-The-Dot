@@ -73,8 +73,8 @@ void drawerServerHandleCommand() {
         checkAndExecuteCommand(cmdSegmentValue);
         cmdSegmentIndex++;
     }
-    // TODO remove alternativ debugging code
-    // mled.display();
+
+    debugOLEDDisplay();
 
     setNoCacheHeaders();
     server.send ( 200, "application/json", "{\"success\": true, \"message\": \"Commands processed.\", \"amount\": "+ String(cmdSegmentIndex) +"}\n");
@@ -127,13 +127,8 @@ boolean checkAndExecuteCommand(const String &command)
 
         SerialDisplay.println(c + "x" + r + "x" + high);
 
-        // TODO remove alternativ debugging code
-        // Commands a 1 based, leds are 0 based, leds limited by 8 in each direction
-        /*
-        if ( c_int < 9 && r_int < 9 ) {
-          // mled.dot(c_int-1, r_int-1, high.toInt()==1);
-        }
-        */
+        debugOLEDDrawSegment(c_int-1, r_int-1, high.toInt()==1);
+        
         return true;
       }
     }

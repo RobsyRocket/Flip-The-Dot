@@ -1,12 +1,17 @@
 // TODO overall documentation, code review and cleanup
 
 #define DEBUG 0
+#define DEBUG_OLED 0
 
 
 #include "setupSerial.h"
 
 
 #include "FlipDotWifiManager.h"
+
+#include "debugOLED.h"
+
+
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -44,6 +49,7 @@ void setup() {
 
   delay(1000);
 
+  debugOLEDSetup();
   
    // starting SPIFFS thrings
   PRINTSLN("Mounting FS...");
