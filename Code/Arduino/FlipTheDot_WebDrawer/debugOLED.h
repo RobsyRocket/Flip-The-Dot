@@ -21,16 +21,23 @@ unsigned int OLED_seg_height = 2;
 unsigned int OLED_seg_width_with_border = OLED_seg_width+OLED_BORDER*2;
 unsigned int OLED_seg_height_with_border = OLED_seg_height+OLED_BORDER*2;
 
-unsigned int OLED_x_max = 64 / (OLED_seg_width_with_border+OLED_GAP);
-unsigned int OLED_y_max = 48 / (OLED_seg_height_with_border+OLED_GAP) - 1;
+#define OLED_X_LIMIT  (64 + OLED_GAP) / (OLED_seg_width_with_border+OLED_GAP)
+#define OLED_Y_LIMIT (48 + OLED_GAP) / (OLED_seg_height_with_border+OLED_GAP)
+
+unsigned int OLED_x_max = OLED_X_LIMIT;
+unsigned int OLED_y_max = OLED_Y_LIMIT;
+
 
 int OLED_x, OLED_y = 0;
 
 void debugOLEDInitField(unsigned int size_x, unsigned int size_y) {
+  OLED_x_max = (size_x < OLED_X_LIMIT) ? size_x : OLED_X_LIMIT;
+  OLED_y_max = (size_y < OLED_Y_LIMIT) ? size_y : OLED_Y_LIMIT;
+
   oled.clear(ALL); // will clear out the OLED's graphic memory.
   oled.clear(PAGE); // will clear the Arduino's display buffer.
-  for ( unsigned int OLED_x = 0; OLED_x <= size_x; OLED_x++ ) {
-    for ( unsigned int OLED_y = 0; OLED_y <= size_y; OLED_y++ ) {
+  for ( unsigned int OLED_x = 0; OLED_x < size_x; OLED_x++ ) {
+    for ( unsigned int OLED_y = 0; OLED_y < size_y; OLED_y++ ) {
       oled.rect(
           OLED_x*(OLED_seg_width_with_border+OLED_GAP),
           OLED_y*(OLED_seg_height_with_border+OLED_GAP),
@@ -49,7 +56,8 @@ void debugOLEDDisplay() {
 }
 
 void debugOLEDDrawSegment(unsigned int _x, unsigned int _y, boolean _filled) {
-  _y = OLED_y_max-_y; // flip vertically to match OLED shield orientation with painting area
+  _y = OLED_y_max-1-_y; // flip vertically to match OLED shield and painting area orientation
+
   oled.rectFill(
       _x*(OLED_seg_width_with_border+OLED_GAP) + OLED_BORDER,
       _y*(OLED_seg_height_with_border+OLED_GAP) + OLED_BORDER,
