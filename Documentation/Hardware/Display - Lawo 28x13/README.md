@@ -3,7 +3,7 @@
 This display is one of the various displays made by the company Lawo-Luminator-Europa Mark IV Industries GmbH. Based on its size with only 28x13 dots, it was probably used to show the route number on the side or rear end of the bus.
 
 ![front view of a Lawo display with 28x13 flip-dots](Pictures/01%20-%20Lawo%2028x13%20-%2050%20Pin%20-%20Front.jpg)
-![back view of a Lawo display with 28x13 flip-dots](Pictures/01%20-%20Lawo%2028x13%20-%2050%20Pin%20-%20Front.jpg)
+![back view of a Lawo display with 28x13 flip-dots](Pictures/02%20-%20Lawo%2028x13%20-%2050%20Pin%20-%20Back.jpg)
 
 Driving it requires additional hardware as it only has one FP2800a onboard which has its 28 outputs wired to the column pins of the flip-dot elements. The additional hardware for driving the rows, which could be another FP2800a, needs to be connected via the IDC connector. 
 
