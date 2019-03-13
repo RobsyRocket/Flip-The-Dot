@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:Lawo 28x13 Matrix Components-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -572,31 +573,31 @@ Wire Wire Line
 Wire Wire Line
 	7750 1500 6600 1500
 Text GLabel 1900 1900 0    60   BiDi ~ 0
-RESET_13
+COL_13
 Text GLabel 1900 3200 0    60   BiDi ~ 0
-RESET_01
+COL_01
 Text GLabel 1900 3100 0    60   BiDi ~ 0
-RESET_02
+COL_02
 Text GLabel 1900 2900 0    60   BiDi ~ 0
-RESET_04
+COL_04
 Text GLabel 1900 3000 0    60   BiDi ~ 0
-RESET_03
+COL_03
 Text GLabel 1900 2700 0    60   BiDi ~ 0
-RESET_05
+COL_05
 Text GLabel 1900 2800 0    60   BiDi ~ 0
-RESET_06
+COL_06
 Text GLabel 1900 2600 0    60   BiDi ~ 0
-RESET_07
+COL_07
 Text GLabel 1900 2200 0    60   BiDi ~ 0
-RESET_08
+COL_08
 Text GLabel 1900 2100 0    60   BiDi ~ 0
-RESET_09
+COL_09
 Text GLabel 1900 2000 0    60   BiDi ~ 0
-RESET_10
+COL_10
 Text GLabel 1900 1800 0    60   BiDi ~ 0
-RESET_11
+COL_11
 Text GLabel 1900 2400 0    60   BiDi ~ 0
-RESET_12
+COL_12
 Wire Wire Line
 	1900 1800 2000 1800
 Wire Wire Line
@@ -623,34 +624,32 @@ Wire Wire Line
 	2000 3100 1900 3100
 Wire Wire Line
 	1900 3200 2000 3200
-NoConn ~ 2000 2500
-NoConn ~ 3100 2500
 Text GLabel 3200 2100 2    60   BiDi ~ 0
-SET_01
+COL_15
 Text GLabel 3200 2000 2    60   BiDi ~ 0
-SET_02
+COL_16
 Text GLabel 3200 1900 2    60   BiDi ~ 0
-SET_03
+COL_17
 Text GLabel 3200 1700 2    60   BiDi ~ 0
-SET_04
+COL_18
 Text GLabel 3200 2300 2    60   BiDi ~ 0
-SET_05
+COL_19
 Text GLabel 3200 1800 2    60   BiDi ~ 0
-SET_06
+COL_20
 Text GLabel 3200 2400 2    60   BiDi ~ 0
-SET_07
+COL_21
 Text GLabel 3200 3100 2    60   BiDi ~ 0
-SET_08
+COL_22
 Text GLabel 3200 3000 2    60   BiDi ~ 0
-SET_09
+COL_23
 Text GLabel 3200 2900 2    60   BiDi ~ 0
-SET_10
+COL_24
 Text GLabel 3200 2800 2    60   BiDi ~ 0
-SET_11
+COL_25
 Text GLabel 3200 2600 2    60   BiDi ~ 0
-SET_12
+COL_26
 Text GLabel 3200 2700 2    60   BiDi ~ 0
-SET_13
+COL_27
 Wire Wire Line
 	3100 3100 3200 3100
 Wire Wire Line
@@ -702,6 +701,10 @@ F 3 "~" H 6300 2700 50  0001 C CNN
 	1    6300 2700
 	1    0    0    -1  
 $EndComp
+Text GLabel 1900 2500 0    60   BiDi ~ 0
+COL_14
+Wire Wire Line
+	1900 2500 2000 2500
 $Comp
 L FP2800a:FP2800A IC1
 U 1 1 574CC9A9
@@ -714,4 +717,8 @@ F 4 "Column Controller" H 2550 1950 60  0001 C CNN "Usage"
 	1    2550 1950
 	1    0    0    -1  
 $EndComp
+Text GLabel 3200 2500 2    60   BiDi ~ 0
+COL_28
+Wire Wire Line
+	3100 2500 3200 2500
 $EndSCHEMATC
