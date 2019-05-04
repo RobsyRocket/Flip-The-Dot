@@ -37,7 +37,9 @@ bool drawerConfigUpdate() {
   configFile.close();
 
   // TODO implement loading and using of configured size right away in the setup function
+  #ifdef debugOLEDInitField
   debugOLEDInitField(root.get<String>("width").toInt(), root.get<String>("height").toInt());
+  #endif
   return true;
 }
 
