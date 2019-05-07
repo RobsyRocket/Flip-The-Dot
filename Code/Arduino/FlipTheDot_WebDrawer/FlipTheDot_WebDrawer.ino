@@ -1,39 +1,35 @@
 // TODO overall documentation, code review and cleanup
 
+// Set to 0 to disable debug output, set to 1 for standard (hardware) Serial, or set to 2 for SoftwareSerial.
 #define DEBUG 0
-#define DEBUG_OLED 0
-
-
 #include "setupSerial.h"
 
 
-#include "FlipDotWifiManager.h"
-
+// Set to 1 if a Lolin(Wemos) OLED shield is connected as alternative output. Updating the display will slow down the response rate.
+#define DEBUG_OLED 0
+// go to this file to configure the OLED device properties and layout settings
 #include "debugOLED.h"
 
 
-
+#include "FlipDotWifiManager.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
 #include "FS.h"
 
-
-// TODO think about if this is needed or can be solved differently
-unsigned int offTime = 200;
-unsigned int onTime = 500;
-int led_pin = LED_BUILTIN;
-
-
 String deviceName = "FlipDot";
-
 ESP8266WebServer server(80);  //port 80
 #if defined(DEBUG) && DEBUG
 FlipDotWifiManager wifiManager(deviceName.c_str(), true);
 #else
 FlipDotWifiManager wifiManager(deviceName.c_str(), false);
 #endif
-  
+
+
+// TODO think about if this is needed or can be solved differently
+int led_pin = LED_BUILTIN;
+
+
 
 void setup() {
   /* switch on led */

@@ -80,4 +80,5 @@ void debugOLEDSetup() {
   #define debugOLEDSetup()
   #define debugOLEDDisplay()
   #define debugOLEDDrawSegment(_x, _y, _filled)
+  #define debugOLEDInitField(size_x, size_y)
 #endif
