@@ -61,3 +61,13 @@ bool handleCommand() {
   server.send(401, "application/json", "{\"success\": false}");
   return true;
 }
+
+void handleWebSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length){
+  // Do something with the data from the client
+  if(type == WStype_TEXT){
+    if ( checkAndExecuteCommand((char*)payload) ) {
+      // update OLED instantly
+      debugOLEDDisplay();
+    }
+  }
+}

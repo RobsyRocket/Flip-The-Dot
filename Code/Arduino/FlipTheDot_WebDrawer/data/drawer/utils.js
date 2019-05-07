@@ -18,6 +18,8 @@ window.onload = function () {
     })
 }
 
+var use_websocket = true;
+
 function configPrompt(prefix_msg) {
     // TODO validate input to check for numbers and positive values
     var width = prompt((prefix_msg ? (prefix_msg + " ") : "") + "Please specify the matrix dimension: Width");
@@ -64,6 +66,10 @@ function configSave(newConfigJson, callback) {
 }
 
 function initInterface(configJson) {
+    var webSocket = null;
+    function sendCommandViaWS(command){
+        webSocket.send(command);
+    }
 
     var cMax = configJson.width;
     var rMax = configJson.height;
@@ -127,29 +133,80 @@ function initInterface(configJson) {
 
         var command = column + 'x' + row + 'x' + (state ? 1 : 0);
         var targetPath = 'drawer/commands';
-        buffer.push(command);
 
-        // TODO think about to collect commands and make a bulk request: https://davidwalsh.name/javascript-debounce-function
-        // https://blog.garstasio.com/you-dont-need-jquery/ajax/#getting
-
-        setTimeout(function () {
-            var commands = buffer.splice(0, chunksize).join(' ');
-            if (commands < 1) {
-                return false;
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', targetPath + '?commands=' + commands);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    console.log('Success:' + xhr.responseText);
+        if ( use_websocket ) {
+            try {
+                if ( !webSocket )
+                {
+                    webSocket = new WebSocket('ws://' + window.location.hostname + ':81/');
+                    webSocket.onopen = function () {
+                        try {
+                            while (buffer.length > 0) {
+                            // take the first (oldest) element from the buffer
+                            sendCommandViaWS(buffer.shift());
+                            }
+                        }
+                        catch (e) {
+                            console.error(e);
+                            // add back to where it was taken from, the beginning of the buffer
+                            buffer.unshift(command);
+                        }
+                    };
+                    webSocket.onclose = function(e) {
+                        console.log('websocket close', e);
+                        if (e.code != 1000 ) {  // not CLOSE_NORMAL
+                            webSocket = null;
+                        }
+                    };
+                    webSocket.onerror = function(e) {
+                        console.log('websocket error', e);
+                        if (e.code  == 'ECONNREFUSED' ) {
+                            webSocket.close();
+                            webSocket = null;
+                        }
+                    };
+                }
+                if (webSocket && webSocket.readyState !== 1) {
+                    // websocket not available, add to the buffer to try it again later
+                    buffer.push(command);
                 }
                 else {
-                    console.log('Request failed.  Returned status of ' + xhr.status);
-                    console.log('ResponseText:' + xhr.responseText);
+                    sendCommandViaWS(command);
                 }
-            };
-            xhr.send();
-        }, debounceTime);
+            }
+            catch (e) {
+                console.error("websocket exception", e);
+                // websocket on error, add to the buffer to try it again later
+                buffer.push(command);
+            }
+        }
+        else {
+            buffer.push(command);
+
+            // TODO think about to collect commands and make a bulk request: https://davidwalsh.name/javascript-debounce-function
+            // https://blog.garstasio.com/you-dont-need-jquery/ajax/#getting
+
+            setTimeout(function () {
+                var commands = buffer.splice(0, chunksize).join(' ');
+                if (commands < 1) {
+                    return false;
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', targetPath + '?commands=' + commands);
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log('Success:' + xhr.responseText);
+                    }
+                    else {
+                        // TODO add implementation to the failed commands back to the buffer for later processing (like: buffer.shift(...commands);)
+                        // TODO add implementation to try again sending the buffered commands without manual interaction of the user
+                        console.log('Request failed.  Returned status of ' + xhr.status);
+                        console.log('ResponseText:' + xhr.responseText);
+                    }
+                };
+                xhr.send();
+            }, debounceTime);
+        }
     };
 
     var isActiveDrawOnMove = false;

@@ -26,6 +26,10 @@ FlipDotWifiManager wifiManager(deviceName.c_str(), false);
 #endif
 
 
+#include <WebSocketsServer.h>
+WebSocketsServer webSocket = WebSocketsServer(81);
+
+
 // TODO think about if this is needed or can be solved differently
 int led_pin = LED_BUILTIN;
 
@@ -64,6 +68,9 @@ void setup() {
   wifiManager.setName(deviceName.c_str());
   wifiManager.reconnect();
 
+  webSocket.begin();
+  webSocket.onEvent(handleWebSocketEvent);
+
   // check if device name got changed within Wifi Manager logic
   if ( deviceName != wifiManager.getName() ) {
     // if yes, then read back the new value and update the configuration
@@ -94,5 +101,6 @@ void loop() {
   // satisfy ESP8266 background processes
   yield();
   // HTTP
+  webSocket.loop();
   server.handleClient();
 }
