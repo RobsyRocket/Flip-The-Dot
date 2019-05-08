@@ -113,12 +113,14 @@ function initInterface(configJson) {
         c--;
         r--;
 
-        var table = document.getElementsByTagName('table')[0];
-        var rows = table.getElementsByTagName('tr');
-        if (rows.length > 0 && rows.length - 1 >= r) {
-            var cols = rows[r].getElementsByTagName('td');
-            if (cols.length > 0 && cols.length - 1 >= c) {
-                return cols[c];
+        if ( c >= 0 && r >= 0 ) {
+            var table = document.getElementsByTagName('table')[0];
+            var rows = table.getElementsByTagName('tr');
+            if (rows.length > 0 && rows.length - 1 >= r) {
+                var cols = rows[r].getElementsByTagName('td');
+                if (cols.length > 0 && cols.length - 1 >= c) {
+                    return cols[c];
+                }
             }
         }
         return null;
@@ -254,10 +256,13 @@ function initInterface(configJson) {
     display += '<button name="top">&#x25B2;</button>';
     display += '<button name="down">&#x25BC;</button>';
     display += 'Actions: ';
-    display += '<button name="do_all">Do all</button>';
-    display += '<button name="export">Export</button>';
-    display += '<button name="import">Import</button>';
-    display += '<button name="config">Config</button>';
+    display += '<button name="do_all" title="Perform draw mode action on all image parts at once.">Do all</button>';
+    display += '<button name="export" title="Generate and provide list of commands for the current image to save it elsewhere.">Export</button>';
+    display += '<button name="import" title="Allows pasting of previously exported list of commands to restore image.">Import</button>';
+    display += '<button name="config" title="Configure image width, height and command transmission rate.">Config</button>';
+    display += '<span title="Using local browser storage to save current image and load it back.">Storage: ';
+    display += '<button name="save_graphic_locally" title="Using local browser storage to save current image.">Save</button>';
+    display += '<button name="load_graphic_locally" title="Restore image from local browser storage.">Load</button>';
 
 
     document.body.innerHTML = display;
@@ -392,6 +397,56 @@ function initInterface(configJson) {
         }
     }
 
+    function saveCommandsLocally() {
+        var table = document.getElementsByTagName('table')[0];
+        var cells = table.getElementsByTagName('td');
+        var rows = table.getElementsByTagName('tr');
+
+        var data = {
+            width: cells.length / rows.length,
+            height: rows.length,
+            states: ''
+        };
+
+        Array.prototype.slice.call(cells).map(function (cell) {
+            data.states += cell.getAttribute('data-active') == 1 ? 1 : 0;
+        });
+
+        try {
+            localStorage.setItem('commands', JSON.stringify(data));
+            return JSON.stringify(data) === localStorage.getItem('commands');
+        }
+        catch (e){
+            console.error(e);
+            return false;
+        }
+    }
+
+    function readbackCommandsLocally() {
+        var data = JSON.parse(localStorage.getItem('commands'));
+        if ( data && data.width && data.height && data.states ) {
+            var statesSplitted = data.states.split("");
+            var rowIndex = 0;
+            var cellToChange;
+            while ( statesSplitted && rowIndex < data.height ) {
+                // take relevant portion to process out of the data stream
+                var stateOfThisRow = statesSplitted.slice(0, data.width);
+                // remove the taken part and keep the renaming part for the next iteration
+                statesSplitted = statesSplitted.slice(data.width);
+
+                for ( var colIndex = 0; colIndex < stateOfThisRow.length; colIndex++ ) {
+                    cellToChange = getCellAtCoordinate(colIndex + 1, rowIndex + 1 );
+                    if (cellToChange !== null) {
+                        setCell(cellToChange, parseInt(stateOfThisRow[colIndex]));
+                    }
+                }
+                rowIndex++;
+            }
+            return true;
+        }
+        return false;
+    }
+
     bind(document.getElementsByName('export'), 'click', function () {
         alert(tableToCommands(true, false));
     });
@@ -401,6 +456,14 @@ function initInterface(configJson) {
         if (commands != null) {
             commandsToTable(commands);
         }
+    });
+
+    bind(document.getElementsByName('save_graphic_locally'), 'click', function () {
+        alert(saveCommandsLocally() ? "Saved successfully in your browser." : "Could not save data in your browser.");
+    });
+        
+    bind(document.getElementsByName('load_graphic_locally'), 'click', function () {
+        !readbackCommandsLocally() ? alert("Could find or load locally saved data.") : '';
     });
 
     Array.prototype.slice.call(document.getElementsByTagName('td')).map(function (cell) {
