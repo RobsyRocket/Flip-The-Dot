@@ -79,7 +79,7 @@ function initInterface(configJson) {
     var bind = function (nodeList, action, callback) {
         nodeList = nodeList != null && typeof nodeList[Symbol.iterator] === 'function' ? nodeList : [nodeList];
         each(nodeList, function (node) {
-            node['on' + action] = callback;
+            node.addEventListener(action, callback);
         });
     };
     var each = function (nodeList, callback) {
@@ -116,9 +116,9 @@ function initInterface(configJson) {
         if ( c >= 0 && r >= 0 ) {
             var table = document.getElementsByTagName('table')[0];
             var rows = table.getElementsByTagName('tr');
-            if (rows.length > 0 && rows.length - 1 >= r) {
+            if (rows && rows[r]) {
                 var cols = rows[r].getElementsByTagName('td');
-                if (cols.length > 0 && cols.length - 1 >= c) {
+                if (cols && cols[c]) {
                     return cols[c];
                 }
             }
@@ -247,7 +247,7 @@ function initInterface(configJson) {
 
     display += 'Mode: ';
     for (var dOMA_i = 0; dOMA_i < drawActions.length; dOMA_i++) {
-        display += '<label><input type="radio" name="drawAction" id="drawAction_' + dOMA_i + '" ' + (drawCallback == drawActions[dOMA_i].callback ? 'checked' : '') + ' /><button id="drawAction_' + dOMA_i + '_btn">' + drawActions[dOMA_i].label + '</button></label>';
+        display += '<input type="radio" name="drawAction" id="drawAction_' + dOMA_i + '" ' + (drawCallback == drawActions[dOMA_i].callback ? 'checked' : '') + ' /><label for="drawAction_' + dOMA_i + '" id="drawAction_' + dOMA_i + '_btn">' + drawActions[dOMA_i].label + '</label>';
     }
 
     display += 'Move: ';
@@ -271,19 +271,9 @@ function initInterface(configJson) {
         (function (i, callback) {
             bind(document.getElementById('drawAction_' + i), 'change', function () {
                 drawCallback = callback;
-                this.setAttribute('checked', 'checked');
+                //this.setAttribute('checked', 'checked');
             });
         })(dOMA_i, drawActions[dOMA_i].callback);
-    }
-
-    for (var dOMA_i = 0; dOMA_i < drawActions.length; dOMA_i++) {
-        (function (i) {
-            bind(document.getElementById('drawAction_' + i + '_btn'), 'click', function () {
-                var input = document.getElementById('drawAction_' + i);
-                input.setAttribute('checked', 'checked');
-                input.onchange();
-            });
-        })(dOMA_i);
     }
 
     bind(document.getElementsByName('config'), 'click', function () {
@@ -296,23 +286,7 @@ function initInterface(configJson) {
             cells[ci].onmousedown();
         }
     });
-
-
-    /*
-    var commands = '';
-    var bitmap = '';
-    var rows = document.getElementsByTagName('tr');
-    for ( var ri = 0; ri < rows.length; ri++ ) {
-      var row_cells = rows[ri].getElementsByTagName('td');
-      for ( var ci = 0; ci < row_cells.length; ci++ ) {
-        var column = row_cells[ci].getAttribute('data-c');
-        var row = row_cells[ci].getAttribute('data-r');
-        var state = row_cells[ci].getAttribute('data-active');
-        commands += ' '+column+'x'+row+'x'+state;
-      }
-    }
-    console.log(commands);
-    */
+    
 
     bind(document.getElementsByTagName('html'), 'mouseup', function () { setDrawOnMove(false); });
     // change only when triggered with event, not manual call

@@ -49,16 +49,17 @@ input[name="drawAction"] {
   left: -10000px;
 }
 
-.btn, button {
+button, label {
   border-radius: 3px;
-  border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+  border-color: rgb(186, 186, 186) rgb(163, 163, 163) rgb(140, 140, 140);
   border-style: solid;
   border-width: 1px;
   padding: 1px 7px 2px;
   margin: 1px;
-  background-color: #FFFFFF;
+  background-color: rgb(239, 239, 239);
+  font-size: inherit;
 }
 
-input[name="drawAction"]:checked + button {
+input:checked + label {
   background-color: lime;
 }
