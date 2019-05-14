@@ -5,12 +5,6 @@
 #include "setupSerial.h"
 
 
-// Set to 1 if a Lolin(Wemos) OLED shield is connected as alternative output. Updating the display will slow down the response rate.
-#define DEBUG_OLED 0
-// go to this file to configure the OLED device properties and layout settings
-#include "debugOLED.h"
-
-
 #include "FlipDotWifiManager.h"
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -28,6 +22,12 @@ FlipDotWifiManager wifiManager(deviceName.c_str(), false);
 
 #include <WebSocketsServer.h>
 WebSocketsServer webSocket = WebSocketsServer(81);
+
+
+// Set to 1 if a Lolin(Wemos) OLED shield is connected as alternative output. Updating the display will slow down the response rate.
+#define DEBUG_OLED 0
+// go to this file to configure the OLED device properties and layout settings
+#include "debugOLED.h"
 
 
 // TODO think about if this is needed or can be solved differently
