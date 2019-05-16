@@ -1,141 +1,38 @@
 window.onload = function () {
-    configLoad(function (xhrProgressEvent) {
-        xhr = this;
-        var config = {};
-        var valid = false;
-
-        if (xhr.status === 200) {
-            var config = JSON.parse(xhr.responseText);
-            // TODO implement config check
-            valid = true;
-        }
-        if (valid) {
-            initInterface(config);
+    // url (required), options (optional)
+    fetch('drawer/config', {
+        method: 'get'
+    }).then(function(response) {
+        if ( response.ok ) {
+            response.json().then(jsonConfig => {
+                initInterface(jsonConfig);
+            }).catch(e => {
+                return Promise.reject("Could not parse config!");
+            })
         }
         else {
-            configPrompt("Config could not be loaded or was invalid!");
+            return Promise.reject("Response not ok!");
         }
-    })
+    }).catch(function(err) {
+        configPrompt("Config could not be loaded or was invalid!");
+    });
 }
 
 var use_websocket = true;
 
-function configPrompt(prefix_msg) {
-    // TODO validate input to check for numbers and positive values
-    var width = prompt((prefix_msg ? (prefix_msg + " ") : "") + "Please specify the matrix dimension: Width");
-    var height = prompt("Please specify the matrix dimension: Height");
-    var debounce = prompt("Please specify command debounce time: Milliseconds");
+// the following variables are only relevant in non-websocket operation and almost all to prevent crashing the receiving microcontroller
+var targetPath = 'drawer/commands';
+var debounceTimeDefault = 100;
+var debounceTime = debounceTimeDefault;
+var commandsChunksize; // determined the length of data to send as batch in a single GET request, gets calculated and update in initInterface
 
-    // might be need to be ordered alphabetically
-    var configJson = {
-        debounce: debounce,
-        height: height,
-        width: width
-    };
-
-    configSave(configJson, function (xhrProgressEvent) {
-        xhr = this;
-        if ( xhr.status === 200 && JSON.stringify(configJson) == JSON.stringify(JSON.parse(xhr.responseText)) ) {
-            alert("Config updated.");
-            initInterface(configJson);
-        }
-        else {
-            if ( confirm("Error: New config could not be saved or was invalid! Click OK to try again or cancel to proceed without saving.") ) {
-                configPrompt();
-            } else {
-                initInterface(configJson);
-            }
-        }
-    });
-}
-
-function configLoad(callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'drawer/config');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = callback;
-    xhr.send();
-}
-
-function configSave(newConfigJson, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('PUT', 'drawer/config');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = callback;
-    xhr.send(JSON.stringify(newConfigJson));
-}
-
-function initInterface(configJson) {
-    var webSocket = null;
-    function sendCommandViaWS(command){
-        webSocket.send(command);
-    }
-
-    var cMax = configJson.width;
-    var rMax = configJson.height;
-    var debounceTime = configJson.debounce || 100;
-    var chunksize = (2000) / (encodeURI(cMax + 'x' + rMax + 'x?' + ' ').length);
-
-    var bind = function (nodeList, action, callback) {
-        nodeList = nodeList != null && typeof nodeList[Symbol.iterator] === 'function' ? nodeList : [nodeList];
-        each(nodeList, function (node) {
-            node.addEventListener(action, callback);
-        });
-    };
-    var each = function (nodeList, callback) {
-        Array.prototype.slice.call(nodeList).map(function (node, index) {
-            callback(node, index);
-        });
-    };
-
-
-    var getState = function (node) {
-        return node.getAttribute('data-active') == 1;
-    };
-
-    var setState = function (node, newState) {
-        node.setAttribute('data-active', newState ? 1 : 0);
-        return getState(node);
-    };
-
-    var setCell = function (node, newState) {
-        var column = node.getAttribute('data-c');
-        var row = node.getAttribute('data-r');
-
-        // update only if needed
-        if (newState != getState(node)) {
-            sendRequest(column, row, newState);
-            setState(node, newState);
-        }
-    };
-
-    function getCellAtCoordinate(c, r) {
-        c--;
-        r--;
-
-        if ( c >= 0 && r >= 0 ) {
-            var table = document.getElementsByTagName('table')[0];
-            var rows = table.getElementsByTagName('tr');
-            if (rows && rows[r]) {
-                var cols = rows[r].getElementsByTagName('td');
-                if (cols && cols[c]) {
-                    return cols[c];
-                }
-            }
-        }
-        return null;
-    }
-
-    var invertCell = function (node) {
-        setCell(node, !getState(node));
-    };
-
+var sendRequest = (function(){
     var buffer = new Array();
-    var sendRequest = function (column, row, state) {
+    var webSocket = null;
 
+    return function(column, row, state) {
         var command = column + 'x' + row + 'x' + (state ? 1 : 0);
-        var targetPath = 'drawer/commands';
-
+    
         if ( use_websocket ) {
             try {
                 if ( !webSocket )
@@ -144,8 +41,8 @@ function initInterface(configJson) {
                     webSocket.onopen = function () {
                         try {
                             while (buffer.length > 0) {
-                            // take the first (oldest) element from the buffer
-                            sendCommandViaWS(buffer.shift());
+                                // take the first (oldest) element from the buffer
+                                webSocket.send(buffer.shift());
                             }
                         }
                         catch (e) {
@@ -173,7 +70,7 @@ function initInterface(configJson) {
                     buffer.push(command);
                 }
                 else {
-                    sendCommandViaWS(command);
+                    webSocket.send(command);
                 }
             }
             catch (e) {
@@ -189,7 +86,7 @@ function initInterface(configJson) {
             // https://blog.garstasio.com/you-dont-need-jquery/ajax/#getting
 
             setTimeout(function () {
-                var commands = buffer.splice(0, chunksize).join(' ');
+                var commands = buffer.splice(0, commandsChunksize).join(' ');
                 if (commands < 1) {
                     return false;
                 }
@@ -209,6 +106,123 @@ function initInterface(configJson) {
                 xhr.send();
             }, debounceTime);
         }
+    }
+})();
+
+function configPrompt(prefix_msg) {
+    // TODO validate input to check for numbers and positive values
+    var width;
+    var height;
+    var debounce;
+    var succeeded = false;
+
+    if (
+        (width = prompt((prefix_msg ? (prefix_msg + " ") : "") + "Please specify the matrix dimension: Width")) !== null &&
+        (height = prompt("Please specify the matrix dimension: Height")) !== null &&
+        (use_websocket || (use_websocket && (debounce = prompt("Please specify command debounce time: Milliseconds")) !== null))
+    ) {
+        // might be need to be ordered alphabetically
+        var configJson = {
+            debounce: debounce,
+            height: height,
+            width: width
+        };
+
+        configSave(configJson).then(response => {
+            response.json().then(respondedJson => {
+                if ( JSON.stringify(configJson) == JSON.stringify(respondedJson) ) {
+                    alert("Config updated.");
+                    initInterface(configJson);
+                } else {
+                    return Promise.reject("New config could not be saved or was invalid!");
+                }
+            }).catch(e => {
+                return Promise.reject(e.message);
+            });
+        }).catch(e => {
+            if ( confirm("Error: "+e.message+" Click OK to try again or cancel to proceed without saving.") ) {
+                configPrompt();
+            } else {
+                initInterface(configJson);
+            }
+        });
+    } else {
+        alert("Note: Configuration update aborted. Please start again if desired.");
+    }
+}
+
+function configSave(newConfigJson, callback) {
+    return fetch('drawer/config', {
+        method: 'PUT',
+        body: JSON.stringify(newConfigJson),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+    })
+}
+
+function getCellAtCoordinate(c, r) {
+    c--;
+    r--;
+
+    var table;;
+    if ( c >= 0 && r >= 0 && (table = document.getElementsByTagName('table')[0]) ) {
+        var rows = table.getElementsByTagName('tr');
+        if (rows && rows[r]) {
+            var cols = rows[r].getElementsByTagName('td');
+            if (cols && cols[c]) {
+                return cols[c];
+            }
+        }
+    }
+    return null;
+}
+
+function getState(node) {
+    return node.getAttribute('data-active') == 1;
+};
+
+function setState(node, newState) {
+    node.setAttribute('data-active', newState ? 1 : 0);
+    return getState(node);
+};
+
+function setCell(node, newState) {
+    newState = newState ? true : false;
+    if ( node ) {
+        var column = node.getAttribute('data-c');
+        var row = node.getAttribute('data-r');
+
+        // update only if needed
+        if (newState != getState(node)) {
+            sendRequest(column, row, newState);
+            setState(node, newState);
+        }
+        return true;
+    }
+    return false;
+}
+
+function invertCell(node) {
+    setCell(node, !getState(node));
+};
+
+function initInterface(configJson) {
+    var cMax = configJson.width;
+    var rMax = configJson.height;
+    debounceTime = configJson.debounce || debounceTimeDefault;
+    commandsChunksize = (2000) / (encodeURI(cMax + 'x' + rMax + 'x?' + ' ').length);
+
+    var bind = function (nodeList, action, callback) {
+        nodeList = nodeList != null && typeof nodeList[Symbol.iterator] === 'function' ? nodeList : [nodeList];
+        each(nodeList, function (node) {
+            node.addEventListener(action, callback);
+        });
+    };
+    var each = function (nodeList, callback) {
+        Array.prototype.slice.call(nodeList).map(function (node, index) {
+            callback(node, index);
+        });
     };
 
     var isActiveDrawOnMove = false;
@@ -245,6 +259,7 @@ function initInterface(configJson) {
     ];
     drawCallback = drawActions[2].callback;
 
+    display += '<div id="controls">';
     display += 'Mode: ';
     for (var dOMA_i = 0; dOMA_i < drawActions.length; dOMA_i++) {
         display += '<input type="radio" name="drawAction" id="drawAction_' + dOMA_i + '" ' + (drawCallback == drawActions[dOMA_i].callback ? 'checked' : '') + ' /><label for="drawAction_' + dOMA_i + '" id="drawAction_' + dOMA_i + '_btn">' + drawActions[dOMA_i].label + '</label>';
@@ -263,7 +278,7 @@ function initInterface(configJson) {
     display += '<span title="Using local browser storage to save current image and load it back.">Storage: ';
     display += '<button name="save_graphic_locally" title="Using local browser storage to save current image.">Save</button>';
     display += '<button name="load_graphic_locally" title="Restore image from local browser storage.">Load</button>';
-
+    display += '</div>';
 
     document.body.innerHTML = display;
 
@@ -373,8 +388,8 @@ function initInterface(configJson) {
 
     function saveCommandsLocally() {
         var table = document.getElementsByTagName('table')[0];
-        var cells = table.getElementsByTagName('td');
         var rows = table.getElementsByTagName('tr');
+        var cells = table.getElementsByTagName('td');
 
         var data = {
             width: cells.length / rows.length,
@@ -446,15 +461,15 @@ function initInterface(configJson) {
     });
 
     var fitScreenSize = function (event) {
-        var table = document.getElementsByTagName('table');
-        var tdList = table[0].getElementsByTagName('td');
-        var controlsHeight = 24;
+        var table = document.getElementsByTagName('table')[0];
+        var tdList = table.getElementsByTagName('td');
+        var controlsHeight = document.getElementById('controls').offsetHeight;
         var edgeLength = Math.min((window.innerHeight - controlsHeight) / rMax, window.innerWidth / cMax);
         for (var i = 0; i < tdList.length; i++) {
             tdList[i].style.height = edgeLength + "px";
             tdList[i].style.width = edgeLength + "px";
         }
-        table[0].style.width = cMax * edgeLength + "px";
+        table.style.width = cMax * edgeLength + "px";
     };
 
     window.removeEventListener('resize', fitScreenSize);
