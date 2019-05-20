@@ -1,0 +1,6 @@
+[submodule "Documentation/Hardware/Display - Lawo 14x16"]
+	path = Documentation/Hardware/Display - Lawo 14x16
+	url = https://github.com/RobsyRocket/Lawo-14x16-Flip-Dot-Matrix
+[submodule "Documentation/Hardware/Lawo_28x13_Controller"]
+	path = Documentation/Hardware/Lawo_28x13_Controller
+	url = https://github.com/RobsyRocket/Flip-The-Dot_Lawo_28x13_Controller
