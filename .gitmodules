@@ -4,3 +4,6 @@
 [submodule "Documentation/Hardware/Lawo_28x13_Controller"]
 	path = Documentation/Hardware/Lawo_28x13_Controller
 	url = https://github.com/RobsyRocket/Flip-The-Dot_Lawo_28x13_Controller
+[submodule "Documentation/KiCad Library/FP2800a"]
+	path = Documentation/KiCad Library/FP2800a
+	url = https://github.com/RobsyRocket/FP2800a.git
