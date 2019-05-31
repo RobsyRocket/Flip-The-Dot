@@ -17,15 +17,17 @@
 class FlipTheDot_ColumnRowController
 {
     public:
-        FlipTheDot_ColumnRowController(){};
         FlipTheDot_ColumnRowController(FlipTheDot_FP2800a &col_ctrl, FlipTheDot_FP2800a &row_ctrl, unsigned int cols, unsigned int rows, unsigned int pulseLengthMicros);
         FlipTheDot_ColumnRowController(FlipTheDot_FP2800a &col_ctrl, FlipTheDot_FP2800a &row_ctrl, unsigned int pulseLengthMicros);
+        uint8_t getColCount();
+        uint8_t getRowCount();
         void setPulseLength(unsigned int pulseLengthMicros);
         unsigned int getPulseLength();
         boolean show(unsigned int col, unsigned int row);
         boolean hide(unsigned int col, unsigned int row);
         boolean flip(unsigned int col, unsigned int row, boolean show);
     protected:
+        FlipTheDot_ColumnRowController(){};
         FlipTheDot_FP2800a *_colCtrl;
         FlipTheDot_FP2800a *_rowCtrl;
 
@@ -72,6 +74,16 @@ void FlipTheDot_ColumnRowController::setPulseLength(unsigned int pulseLengthMicr
 unsigned int FlipTheDot_ColumnRowController::getPulseLength()
 {
     return _pulseLengthMicros;
+}
+
+uint8_t FlipTheDot_ColumnRowController::getColCount()
+{
+    return _cols;
+}
+
+uint8_t FlipTheDot_ColumnRowController::getRowCount()
+{
+    return _rows;
 }
 
 boolean FlipTheDot_ColumnRowController::show(unsigned int col, unsigned int row)

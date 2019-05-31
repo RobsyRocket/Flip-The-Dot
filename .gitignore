@@ -21,3 +21,7 @@ rescue-backup
 # Autorouter files (exported from Pcbnew)
 *.dsn
 *.ses
+
+
+# others
+.vscode
